@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Rich Text Editor</title>
+    <style>
+      #toolbar {
+        margin-bottom: 10px;
+      }
+
+      #editor {
+        border: 1px solid #ddd;
+        padding: 10px;
+        min-height: 300px;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+      }
+
+      #editor img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Toolbar for formatting -->
+    <div id="toolbar">
+      <button onclick="formatText('bold')">Bold</button>
+      <button onclick="formatText('italic')">Italic</button>
+      <button onclick="formatText('underline')">Underline</button>
+      <button onclick="formatText('strikeThrough')">Strikethrough</button>
+      <button onclick="formatText('justifyLeft')">Left Align</button>
+      <button onclick="formatText('justifyCenter')">Center Align</button>
+      <button onclick="formatText('justifyRight')">Right Align</button>
+      <button onclick="formatText('insertUnorderedList')">Bullet List</button>
+      <button onclick="formatText('insertOrderedList')">Numbered List</button>
+      <button onclick="insertLink()">Insert Link</button>
+      <button onclick="insertImage()">Insert Image</button>
+      <input
+        type="file"
+        id="imageUpload"
+        onchange="uploadImage()"
+        style="display: none"
+      />
+      <button onclick="document.getElementById('imageUpload').click()">
+        Upload Image
+      </button>
+    </div>
+
+    <!-- Editable area -->
+    <div id="editor" contenteditable="true"></div>
+
+    <button onclick="saveContent()">Save</button>
+
+    <script src="editor.js"></script>
+  </body>
+</html>
