@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    width: 60%;
+    max-width: 800px;
+    text-align: center;
+}
+
+#toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#editor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 300px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 5px;
+}
+
+#editor img {
+    max-width: 100%;
+    height: auto;
+}
