@@ -1,9 +1,26 @@
 // Function to execute the formatting command
-function formatText(command) {
+function formatText(command, value = null) {
     document.execCommand(command, false, null);
 }
 
-// Insert a link by prompting the user for a URL
+// Function to handle Heading change
+function formatHeading() {
+    const headingValue = document.getElementById('headingSelect').value;
+    document.execCommand('formatBlock', false, headingValue);
+}
+
+// Function to handle Font Size change
+function formatFontSize() {
+    const fontSizeValue = document.getElementById('fontSizeSelect').value;
+    document.execCommand('fontSize', false, fontSizeValue);
+}
+
+// Function to handle Font Name change
+function formatFontName() {
+    const fontNameValue = document.getElementById('fontNameSelect').value;
+    document.execCommand('fontName', false, fontNameValue);
+}
+
 function insertLink() {
     let url = prompt("Enter the URL:", "https://");
     if (url) {
@@ -11,13 +28,6 @@ function insertLink() {
     }
 }
 
-// Insert an image into the editor
-function insertImage() {
-    let imageUrl = prompt("Enter the image URL:", "https://");
-    if (imageUrl) {
-        document.execCommand('insertImage', false, imageUrl);
-    }
-}
 
 function uploadImage() {
     let input = document.getElementById('imageUpload');
