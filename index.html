@@ -10,6 +10,29 @@
     <div id="container">
       <!-- Toolbar for formatting -->
       <div id="toolbar">
+        <!-- Heading -->
+        <select id="headingSelect" onchange="formatHeading()">
+          <option value="p">Normal</option>
+          <option value="h1">Heading 1</option>
+          <option value="h2">Heading 2</option>
+          <option value="h3">Heading 3</option>
+        </select>
+
+        <!-- Font Size -->
+        <select id="fontSizeSelect" onchange="formatFontSize()">
+          <option value="1">Small</option>
+          <option value="3">Normal</option>
+          <option value="5">Large</option>
+          <option value="7">Huge</option>
+        </select>
+
+        <!-- Font Name -->
+        <select id="fontNameSelect" onchange="formatFontName()">
+          <option value="Arial">Arial</option>
+          <option value="Courier">Courier</option>
+          <option value="Times New Roman">Times New Roman</option>
+        </select>
+
         <button onclick="formatText('bold')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +184,21 @@
             />
           </svg>
         </button>
-        <!-- <button onclick="insertImage()">Insert Image</button> -->
+
+        <!-- Insert Link -->
+        <button onclick="insertLink()">Insert Link</button>
+
+        <!-- Indentation -->
+        <button onclick="formatText('indent')">Indent</button>
+        <button onclick="formatText('outdent')">Outdent</button>
+
+        <!-- Undo/Redo -->
+        <button onclick="formatText('undo')">Undo</button>
+        <button onclick="formatText('redo')">Redo</button>
+
+        <!-- Blockquote -->
+        <button onclick="formatText('formatBlock', 'blockquote')">Quote</button>
+
         <input
           type="file"
           id="imageUpload"
