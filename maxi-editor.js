@@ -47,3 +47,13 @@ function saveContent() {
     let editorContent = document.getElementById('editor').innerHTML;
     console.log(editorContent);  // Here you can send the content to the server using an AJAX request
 }
+
+document.querySelectorAll('.toolbar-button').forEach(button => {
+    button.addEventListener('click', function () {
+        // Remove 'active' class from all buttons
+        document.querySelectorAll('.toolbar-button').forEach(btn => btn.classList.remove('active'));
+
+        // Add 'active' class to the clicked button
+        this.classList.add('active');
+    });
+});
