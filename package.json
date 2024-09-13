@@ -1,0 +1,20 @@
+{
+  "name": "MaxiEditor",
+  "version": "1.0.0",
+  "description": "MaxiEditor is a lightweight, customizable rich text editor designed for web applications. It allows you to create and edit formatted content within a web page, with a fully customizable toolbar that includes options for text formatting, headings, fonts, and custom plugins. This editor comes pre-packaged with essential features and is highly extendable via plugins.",
+  "main": "maxi-editor.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Williamug/maxi-editor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Williamug/maxi-editor/issues"
+  },
+  "homepage": "https://github.com/Williamug/maxi-editor#readme"
+}
