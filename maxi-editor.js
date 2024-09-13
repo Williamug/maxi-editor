@@ -1,59 +1,134 @@
-// Function to execute the formatting command
-function formatText(command, value = null) {
-    document.execCommand(command, false, null);
-}
+class CustomEditor {
+    constructor(element, config) {
+        this.element = element;
+        this.config = config;
+        this.commands = {};
+        this.state = {};
 
-// Function to handle Heading change
-function formatHeading() {
-    const headingValue = document.getElementById('headingSelect').value;
-    document.execCommand('formatBlock', false, headingValue);
-}
+        this.init();
+    }
 
-// Function to handle Font Size change
-function formatFontSize() {
-    const fontSizeValue = document.getElementById('fontSizeSelect').value;
-    document.execCommand('fontSize', false, fontSizeValue);
-}
+    // Initialize the editor
+    init() {
+        // Set up contenteditable element
+        this.element.contentEditable = true;
+        this.element.classList.add('custom-editor');
 
-// Function to handle Font Name change
-function formatFontName() {
-    const fontNameValue = document.getElementById('fontNameSelect').value;
-    document.execCommand('fontName', false, fontNameValue);
-}
+        // Create the toolbar
+        this.createToolPanel();
 
-function insertLink() {
-    let url = prompt("Enter the URL:", "https://");
-    if (url) {
-        document.execCommand('createLink', false, url);
+        // Register core commands (bold, italic, underline)
+        this.registerCoreCommands();
+
+        // Apply user plugins (if any)
+        if (this.config.plugins) {
+            this.applyPlugins(this.config.plugins);
+        }
+
+        // Track selection changes to update toolbar state
+        this.trackSelection();
+    }
+
+    // Create toolbar with icons
+    createToolPanel() {
+        const toolPanel = document.createElement('div');
+        toolPanel.classList.add('custom-toolbar');
+
+        // Insert the toolbar just above the editor
+        this.element.before(toolPanel);
+
+        // Icon mapping for tools
+        const iconMap = {
+            bold: '<i class="bi bi-type-bold"></i>',
+            italic: '<i class="bi bi-type-italic"></i>',
+            underline: '<i class="bi bi-type-underline"></i>',
+            highlight: '<i class="bi bi-brush"></i>'
+        };
+
+        // Dynamically create tools with icons based on config
+        this.config.toolbar.forEach(tool => {
+            const button = document.createElement('button');
+            button.innerHTML = iconMap[tool];
+            button.setAttribute('data-command', tool);
+            button.addEventListener('click', () => this.executeCommand(tool));
+            toolPanel.appendChild(button);
+        });
+    }
+
+    // Register core commands (Bold, Italic, Underline)
+    registerCoreCommands() {
+        this.registerCommand('bold', () => document.execCommand('bold', false, null));
+        this.registerCommand('italic', () => document.execCommand('italic', false, null));
+        this.registerCommand('underline', () => document.execCommand('underline', false, null));
+    }
+
+    // Command registration system
+    registerCommand(commandName, commandFn) {
+        this.commands[commandName] = commandFn;
+    }
+
+    // Execute registered commands
+    executeCommand(commandName) {
+        const command = this.commands[commandName];
+        if (command) {
+            command();
+        } else {
+            console.error(`Command ${commandName} is not registered.`);
+        }
+    }
+
+    // Apply custom plugins
+    applyPlugins(plugins) {
+        plugins.forEach(plugin => plugin.init(this));
+    }
+
+    // Update the state of the toolbar buttons based on current selection
+    updateToolbarState() {
+        const commands = ['bold', 'italic', 'underline'];
+        commands.forEach(cmd => {
+            const isActive = document.queryCommandState(cmd);
+            const button = document.querySelector(`button[data-command=${cmd}]`);
+            if (isActive) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+    // Track selection changes and update toolbar state
+    trackSelection() {
+        document.addEventListener('selectionchange', () => {
+            this.updateToolbarState();
+        });
+    }
+
+    // Get the content of the editor
+    getContent() {
+        return this.element.innerHTML;
+    }
+
+    // Set the content of the editor
+    setContent(content) {
+        this.element.innerHTML = content;
+    }
+
+    // Static method to initialize the editor
+    static create(selector, config) {
+        const element = document.querySelector(selector);
+        if (!element) {
+            throw new Error('Editor element not found');
+        }
+        return new CustomEditor(element, config);
     }
 }
 
-
-function uploadImage() {
-    let input = document.getElementById('imageUpload');
-    let file = input.files[0];
-    let reader = new FileReader();
-
-    reader.onload = function (e) {
-        let img = document.createElement('img');
-        img.src = e.target.result;
-        document.getElementById('editor').appendChild(img);
-    };
-
-    reader.readAsDataURL(file);
+// Sample Highlight Plugin
+class HighlightPlugin {
+    static init(editor) {
+        editor.registerCommand('highlight', () => {
+            const color = prompt("Enter highlight color (e.g., yellow)");
+            document.execCommand('hiliteColor', false, color);
+        });
+    }
 }
-
-function saveContent() {
-    let editorContent = document.getElementById('editor').innerHTML;
-    console.log(editorContent);  // Here you can send the content to the server using an AJAX request
-}
-
-document.querySelectorAll('.toolbar-button').forEach(button => {
-    button.addEventListener('click', function () {
-        // Remove 'active' class from all buttons
-        document.querySelectorAll('.toolbar-button').forEach(btn => btn.classList.remove('active'));
-
-        // Add 'active' class to the clicked button
-        this.classList.add('active');
-    });
-});
