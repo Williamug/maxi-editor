@@ -9,30 +9,13 @@ body {
 }
 
 .editor-container {
-    width: 70%;
-    max-width: 900px;
+    width: auto;
+    max-width: auto;
     text-align: left;
-}
-
-.editor {
-    border: 1px solid #ccc;
-    padding: 10px;
-    min-height: 300px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    background-color: #fff;
 }
 
 .maxi-toolbar {
     display: flex;
-    /* gap: 10px; */
-    /* background-color: #f4f4f4; */
-    /* padding: 10px; */
-    /* border-bottom: 1px solid #ccc; */
-    /* border-radius: 5px 5px 0 0; */
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
-    /* margin-bottom: 10px; */
-
     flex-wrap: wrap;
     justify-content: left;
     margin-bottom: 3px;
@@ -74,8 +57,8 @@ select {
 .maxi-editor {
     border: 1px solid #ddd;
     padding: 10px;
-    min-height: 200px;
-    max-height: 300px;
     overflow-y: auto;
     font-family: Arial, sans-serif;
+    height: auto;
+    background-color: #fff;
 }

@@ -10,6 +10,7 @@ class MaxiEditor {
     constructor(element, config) {
         this.element = element;
         this.config = config;
+        this.height = config.height || '300px';
         this.commands = {};
         this.state = {};
 
@@ -60,12 +61,10 @@ class MaxiEditor {
             this.applyPlugins(this.config.plugins);
         }
 
+
         // Track selection changes to update toolbar state (make the toolbar item active or inactive)
         this.trackSelection();
     }
-
-
-
 
     /**
      * Creates the toolbar panel for the MaxiEditor instance.
@@ -271,6 +270,24 @@ class MaxiEditor {
     }
 
     /**
+       * Sets the height of the editor dynamically.
+       * 
+       * @param {string} height - The desired height (e.g., '500px').
+       */
+    setHeight(height) {
+        this.element.style.height = height;
+    }
+
+    /**
+       * Sets the width of the editor dynamically.
+       * 
+       * @param {string} width - The desired width (e.g., '200px').
+       */
+    setHeight(width) {
+        this.element.style.width = width;
+    }
+
+    /**
      * Creates a new MaxiEditor instance with the specified element and configuration.
      *
      * @param {string} selector - A CSS selector that identifies the element to be used as the editor.
@@ -283,6 +300,15 @@ class MaxiEditor {
         if (!element) {
             throw new Error('Editor element not found');
         }
+
+        if (config.height) {
+            editor.style.height = config.height;
+        }
+
+        if (config.width) {
+            editor.style.width = config.width;
+        }
+
         return new MaxiEditor(element, config);
     }
 }
