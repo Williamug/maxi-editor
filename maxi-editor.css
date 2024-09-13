@@ -23,7 +23,7 @@ body {
     background-color: #fff;
 }
 
-.custom-toolbar {
+.maxi-toolbar {
     display: flex;
     /* gap: 10px; */
     /* background-color: #f4f4f4; */
@@ -50,7 +50,7 @@ select {
     appearance: none;
 }
 
-.custom-toolbar button {
+.maxi-toolbar button {
     padding: 8px 12px;
     background-color: #eaeaea;
     border: none;
@@ -62,18 +62,20 @@ select {
     justify-content: center;
 }
 
-.custom-toolbar button i {
+.maxi-toolbar button i {
     font-size: 18px;
 }
 
-.custom-toolbar button.active {
+.maxi-toolbar button.active {
     background-color: #d0d0d0;
     font-weight: bold;
 }
 
-.custom-editor {
+.maxi-editor {
     border: 1px solid #ddd;
     padding: 10px;
     min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
     font-family: Arial, sans-serif;
 }
