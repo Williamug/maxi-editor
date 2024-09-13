@@ -99,7 +99,6 @@ class MaxiEditor {
         // Add Heading Selector
         const headingSelector = document.createElement('select');
         headingSelector.innerHTML = `
-            <option value="">Heading</option>
             <option value="p">Normal</option>
             <option value="H1">Heading 1</option>
             <option value="H2">Heading 2</option>
@@ -114,7 +113,6 @@ class MaxiEditor {
         // Add Font Family Selector
         const fontSelector = document.createElement('select');
         fontSelector.innerHTML = `
-            <option value="">Font</option>
             <option value="Arial">Arial</option>
             <option value="Times New Roman">Times New Roman</option>
             <option value="Courier New">Courier New</option>
@@ -262,3 +260,12 @@ class MaxiEditor {
         return new MaxiEditor(element, config);
     }
 }
+
+// class HighlightPlugin {
+//     static init(editor) {
+//         editor.registerCommand('highlight', () => {
+//             const color = prompt("Enter highlight color (e.g., yellow)");
+//             document.execCommand('hiliteColor', false, color);
+//         });
+//     }
+// }
