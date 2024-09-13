@@ -85,7 +85,16 @@ class MaxiEditor {
             bold: '<i class="bi bi-type-bold"></i>',
             italic: '<i class="bi bi-type-italic"></i>',
             underline: '<i class="bi bi-type-underline"></i>',
-            highlight: '<i class="bi bi-brush"></i>'
+            highlight: '<i class="bi bi-brush"></i>',
+            strikethrough: '<i class="bi bi-type-strikethrough"></i>',
+            justifyLeft: '<i class="bi bi-text-left"></i>',
+            justifyCenter: '<i class="bi bi-text-center"></i>',
+            justifyRight: '<i class="bi bi-text-right"></i>',
+            insertUnorderedList: '<i class="bi bi-list-task"></i>',
+            insertOrderedList: '<i class="bi bi-list-ol"></i>',
+            indent: '<i class="bi bi-text-indent-left"></i>',
+            undo: '<i class="bi bi-arrow-counterclockwise"></i>',
+            redo: '<i class="bi bi-arrow-clockwise"></i>',
         };
 
         // Tooltip mapping for tools
@@ -94,6 +103,15 @@ class MaxiEditor {
             italic: 'Italic (Ctrl+I)',
             underline: 'Underline (Ctrl+U)',
             highlight: 'Highlight Text',
+            strikethrough: 'Strikethrough',
+            justifyLeft: 'Justify Left',
+            justifyCenter: 'Justify Center',
+            justifyRight: 'Justify Right',
+            insertUnorderedList: 'Unordered List',
+            insertOrderedList: 'Ordered List',
+            indent: 'Indent',
+            undo: 'undo',
+            redo: 'redo',
         };
 
         // Add Heading Selector
@@ -153,6 +171,14 @@ class MaxiEditor {
         this.registerCommand('bold', () => document.execCommand('bold', false, null));
         this.registerCommand('italic', () => document.execCommand('italic', false, null));
         this.registerCommand('underline', () => document.execCommand('underline', false, null));
+        this.registerCommand('justifyLeft', () => document.execCommand('justifyLeft', false, null));
+        this.registerCommand('justifyCenter', () => document.execCommand('justifyCenter', false, null));
+        this.registerCommand('justifyRight', () => document.execCommand('justifyRight', false, null));
+        this.registerCommand('insertUnorderedList', () => document.execCommand('insertUnorderedList', false, null));
+        this.registerCommand('insertOrderedList', () => document.execCommand('insertOrderedList', false, null));
+        this.registerCommand('indent', () => document.execCommand('indent', false, null));
+        this.registerCommand('undo', () => document.execCommand('undo', false, null));
+        this.registerCommand('redo', () => document.execCommand('redo', false, null));
     }
 
 
@@ -201,7 +227,7 @@ class MaxiEditor {
      * corresponding toolbar buttons accordingly.
      */
     updateToolbarState() {
-        const commands = ['bold', 'italic', 'underline'];
+        const commands = ['bold', 'italic', 'underline', 'strikethrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertUnorderedList', 'insertOrderedList', 'indent'];
         commands.forEach(cmd => {
             const isActive = document.queryCommandState(cmd);
             const button = document.querySelector(`button[data-command=${cmd}]`);
@@ -261,11 +287,25 @@ class MaxiEditor {
     }
 }
 
-// class HighlightPlugin {
-//     static init(editor) {
-//         editor.registerCommand('highlight', () => {
-//             const color = prompt("Enter highlight color (e.g., yellow)");
-//             document.execCommand('hiliteColor', false, color);
-//         });
-//     }
-// }
+
+/**
+ * The HighlightPlugin class provides a command to highlight the selected text in the editor with a specified color.
+ *
+ * @class HighlightPlugin
+ */
+class HighlightPlugin {
+    static init(editor) {
+        editor.registerCommand('highlight', () => {
+            const color = prompt("Enter highlight color (e.g., yellow)");
+            document.execCommand('hiliteColor', false, color);
+        });
+    }
+}
+
+class StrikeThrough {
+    static init(editor) {
+        editor.registerCommand('strikethrough', () => {
+            document.execCommand('strikeThrough', false, null);
+        });
+    }
+}

@@ -15,8 +15,20 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const editor = MaxiEditor.create("#editor", {
-          toolbar: ["bold", "italic", "underline", "highlight"],
-          plugins: [HighlightPlugin],
+          toolbar: [
+            "bold",
+            "italic",
+            "underline",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "insertUnorderedList",
+            "insertOrderedList",
+            "indent",
+            "undo",
+            "redo",
+          ],
+          plugins: [],
         });
       });
     </script>
