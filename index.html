@@ -3,13 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Custom Editor with Icons</title>
+    <title>Maxi Editor</title>
     <link rel="stylesheet" href="maxi-editor.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- Adding Bootstrap Icons -->
   </head>
   <body>
     <div class="editor-container">
@@ -18,10 +13,11 @@
 
     <script src="maxi-editor.js"></script>
     <script>
-      // Initialize the editor with a toolbar and the highlight plugin
-      CustomEditor.create("#editor", {
-        toolbar: ["bold", "italic", "underline", "highlight"],
-        plugins: [HighlightPlugin],
+      document.addEventListener("DOMContentLoaded", () => {
+        const editor = MaxiEditor.create("#editor", {
+          toolbar: ["bold", "italic", "underline", "highlight"],
+          plugins: [HighlightPlugin],
+        });
       });
     </script>
   </body>
