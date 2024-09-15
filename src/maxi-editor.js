@@ -301,7 +301,7 @@ class MaxiEditor {
      * @returns {MaxiEditor} A new MaxiEditor instance.
      * @throws {Error} If the editor element is not found.
      */
-    static create(selector, config) {
+    static set(selector, config) {
         const element = document.querySelector(selector);
         if (!element) {
             throw new Error('Editor element not found');
