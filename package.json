@@ -1,6 +1,6 @@
 {
   "name": "maxi-editor",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MaxiEditor is a lightweight, customizable rich text editor designed for web applications. It allows you to create and edit formatted content within a web page, with a fully customizable toolbar that includes options for text formatting, headings, fonts, and custom plugins. This editor comes pre-packaged with essential features and is highly extendable via plugins.",
   "main": "maxi-editor.js",
   "scripts": {
