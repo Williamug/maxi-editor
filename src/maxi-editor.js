@@ -1,4 +1,8 @@
 
+/**
+ * MaxiEditor
+* Copyright © 2024 William Asaba
+ */
 class MaxiEditor {
     /**
      * Constructs a new `MaxiEditor` instance with the provided `element` and `config` parameters.
@@ -10,11 +14,11 @@ class MaxiEditor {
     constructor(element, config) {
         this.element = element;
         this.config = config;
-        this.height = config.height || '300px';
+        this.element.style.height = config.height || '200px';
         this.commands = {};
         this.state = {};
 
-        this.injectBootstrapIcons();
+        this.includeBootstrapIcons();
 
         this.init();
     }
@@ -25,7 +29,7 @@ class MaxiEditor {
      * and if not, it creates a new `<link>` element and appends it to the 
      * document's `<head>`.
      */
-    injectBootstrapIcons() {
+    includeBootstrapIcons() {
         const linkHref = 'https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css';
 
         const isAlreadyIncluded = Array.from(document.styleSheets).some(
@@ -81,27 +85,31 @@ class MaxiEditor {
 
         // Icon mapping for tools
         const iconMap = {
+            undo: '<i class="bi bi-arrow-counterclockwise"></i>',
+            redo: '<i class="bi bi-arrow-clockwise"></i>',
             bold: '<i class="bi bi-type-bold"></i>',
             italic: '<i class="bi bi-type-italic"></i>',
             underline: '<i class="bi bi-type-underline"></i>',
             highlight: '<i class="bi bi-brush"></i>',
             strikethrough: '<i class="bi bi-type-strikethrough"></i>',
+            insertLink: '<i class="bi bi-link"></i>',
             justifyLeft: '<i class="bi bi-text-left"></i>',
             justifyCenter: '<i class="bi bi-text-center"></i>',
             justifyRight: '<i class="bi bi-text-right"></i>',
             insertUnorderedList: '<i class="bi bi-list-task"></i>',
             insertOrderedList: '<i class="bi bi-list-ol"></i>',
             indent: '<i class="bi bi-text-indent-left"></i>',
-            undo: '<i class="bi bi-arrow-counterclockwise"></i>',
-            redo: '<i class="bi bi-arrow-clockwise"></i>',
         };
 
         // Tooltip mapping for tools
         const tooltipsMap = {
+            undo: 'undo',
+            redo: 'redo',
             bold: 'Bold (Ctrl+B)',
             italic: 'Italic (Ctrl+I)',
             underline: 'Underline (Ctrl+U)',
             highlight: 'Highlight Text',
+            insertLink: 'Insert Link',
             strikethrough: 'Strikethrough',
             justifyLeft: 'Justify Left',
             justifyCenter: 'Justify Center',
@@ -109,8 +117,6 @@ class MaxiEditor {
             insertUnorderedList: 'Unordered List',
             insertOrderedList: 'Ordered List',
             indent: 'Indent',
-            undo: 'undo',
-            redo: 'redo',
         };
 
         // Add Heading Selector
@@ -283,7 +289,7 @@ class MaxiEditor {
        * 
        * @param {string} width - The desired width (e.g., '200px').
        */
-    setHeight(width) {
+    setWidth(width) {
         this.element.style.width = width;
     }
 
@@ -335,3 +341,118 @@ class StrikeThrough {
         });
     }
 }
+
+/**
+ * The InsertLinkPlugin class provides a command to insert a hyperlink into the selected text in the editor using a custom modal input.
+ *
+ * @class InsertLinkPlugin
+ */
+class InsertLinkPlugin {
+    static init(editor) {
+        editor.registerCommand('insertLink', () => {
+            InsertLinkPlugin.showLinkInputModal(editor);
+        });
+    }
+
+    /**
+     * Creates and displays a custom modal for entering the URL.
+     * @param {MaxiEditor} editor - The instance of the editor.
+     */
+    static showLinkInputModal(editor) {
+        // Create modal elements
+        const modal = document.createElement('div');
+        modal.classList.add('link-modal');
+        modal.innerHTML = `
+            <div class="modal-content">
+                <label for="link-url">Enter URL:</label>
+                <input type="text" id="link-url" value="https://" />
+                <button id="insert-link-btn">Insert Link</button>
+                <button id="cancel-btn">Cancel</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Store the current selection
+        const selection = window.getSelection();
+        const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+        // Handle insert link button click
+        const insertLinkButton = modal.querySelector('#insert-link-btn');
+        const cancelButton = modal.querySelector('#cancel-btn');
+
+        insertLinkButton.addEventListener('click', () => {
+            const urlInput = modal.querySelector('#link-url').value;
+
+            if (urlInput && range) {
+                // Create an anchor element with the URL
+                const anchor = document.createElement('a');
+                anchor.href = urlInput;
+                anchor.textContent = range.toString();
+                range.deleteContents();
+                range.insertNode(anchor);
+
+                // Optionally, reselect the anchor for further editing if needed
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNode(anchor);
+                selection.addRange(newRange);
+            }
+
+            modal.remove();
+        });
+
+        // Handle cancel button click
+        cancelButton.addEventListener('click', () => {
+            modal.remove();
+        });
+    }
+}
+// CSS for the custom modal (add this to your CSS file or within a <style> tag in the HTML)
+const modalStyle = `
+    .link-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        border-radius: 8px;
+    }
+
+    .link-modal input {
+        width: 100%;
+        margin: 10px 0;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .link-modal button {
+        padding: 4px 10px;
+        margin: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .link-modal button:hover {
+        background-color: #0056b3;
+    }
+
+    .link-modal button#cancel-btn {
+        background-color: #dc3545;
+    }
+
+    .link-modal button#cancel-btn:hover {
+        background-color: #c82333;
+    }
+`;
+
+// Add the modal styles to the document
+const styleTag = document.createElement('style');
+styleTag.innerHTML = modalStyle;
+document.head.appendChild(styleTag);

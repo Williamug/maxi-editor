@@ -1,3 +1,7 @@
+/**
+ * MaxiEditor
+* Copyright © 2024 William Asaba
+ */
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -50,7 +54,8 @@ select {
 }
 
 .maxi-toolbar button.active {
-    background-color: #d0d0d0;
+    background-color: #1606f5;
+    color: #fff;
     font-weight: bold;
 }
 
