@@ -308,11 +308,11 @@ class MaxiEditor {
         }
 
         if (config.height) {
-            editor.style.height = config.height;
+            element.style.height = config.height;
         }
 
         if (config.width) {
-            editor.style.width = config.width;
+            element.style.width = config.width;
         }
 
         return new MaxiEditor(element, config);
