@@ -240,10 +240,14 @@ class MaxiEditor {
         commands.forEach(cmd => {
             const isActive = document.queryCommandState(cmd);
             const button = document.querySelector(`button[data-command=${cmd}]`);
-            if (isActive) {
-                button.classList.add('active');
+            if (button) {
+                if (isActive) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
             } else {
-                button.classList.remove('active');
+                console.warn(`Button with command '${cmd}' not found.`);
             }
         });
     }
