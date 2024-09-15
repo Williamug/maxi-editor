@@ -407,50 +407,6 @@ class InsertLinkPlugin {
         });
     }
 }
-// CSS for the custom modal (add this to your CSS file or within a <style> tag in the HTML)
-const modalStyle = `
-    .link-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        border-radius: 8px;
-    }
-
-    .link-modal input {
-        width: 100%;
-        margin: 10px 0;
-        padding: 4px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .link-modal button {
-        padding: 4px 10px;
-        margin: 5px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .link-modal button:hover {
-        background-color: #0056b3;
-    }
-
-    .link-modal button#cancel-btn {
-        background-color: #dc3545;
-    }
-
-    .link-modal button#cancel-btn:hover {
-        background-color: #c82333;
-    }
-`;
 
 // Add the modal styles to the document
 const styleTag = document.createElement('style');
