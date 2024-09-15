@@ -1,10 +1,10 @@
-# MaxiEditor Documentation
 ![GitHub Tag](https://img.shields.io/github/v/tag/williamug/maxi-editor)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/williamug/maxi-editor)
 [![JSDelivr CDN](https://data.jsdelivr.com/v1/package/gh/<USERNAME>/<REPOSITORY>/badge?style=rounded)](https://www.jsdelivr.com/package/gh/williamug/maxi-editor)
 [![Github all releases](https://img.shields.io/github/downloads/williamug/maxi-editor/total.svg)](https://GitHub.com/williamug/maxi-editor/releases/)
 ![GitHub License](https://img.shields.io/github/license/williamug/maxi-editor)
+# MaxiEditor Documentation
 
 <img title="MaxiEditor" alt="MaxiEditor" src="/images/maxieditor.png">
 
