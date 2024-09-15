@@ -15,8 +15,8 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const editor = MaxiEditor.create("#editor", {
-          height: "500px",
-          width: "800px",
+          height: "200px",
+          width: "auto",
           toolbar: [
             "bold",
             "italic",
@@ -27,10 +27,11 @@
             "insertUnorderedList",
             "insertOrderedList",
             "indent",
+            "insertLink",
             "undo",
             "redo",
           ],
-          plugins: [],
+          plugins: [InsertLinkPlugin],
         });
       });
     </script>
