@@ -407,8 +407,3 @@ class InsertLinkPlugin {
         });
     }
 }
-
-// Add the modal styles to the document
-const styleTag = document.createElement('style');
-styleTag.innerHTML = modalStyle;
-document.head.appendChild(styleTag);
