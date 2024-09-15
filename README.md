@@ -187,10 +187,22 @@ editor.executeCommand('myCustomCommand');
 ## 5. Plugins
 
 ### 5.1. Built-in Plugins
+- `Highlight Plugin`
+- `StrikeThrough`
+- `TextColorPlugin`
+- `LinkPlugin`
+- `RemoveLinkPlugin`
+- `BackgroundColorPlugin`
+- `SubscriptPlugin`
+- `SuperscriptPlugin`
+- `mageURLPlugin`
+- `BlockquotePlugin`
+- `CodeBlockPlugin`
+- `ClearFormattingPlugin`
+- `TablePlugin`
+- `ImageUploadPlugin`
 
-#### Highlight Plugin
-
-```js
+<!-- ```js
 class HighlightPlugin {
     static init(editor) {
         editor.registerCommand('highlight', () => {
@@ -365,7 +377,7 @@ class ImageUploadPlugin {
         });
     }
 }
-```
+``` -->
 
 ### 5.2. Creating Plugins
 
