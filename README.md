@@ -67,6 +67,7 @@ Initialize MaxiEditor in your JavaScript code:
                 'insertOrderedList', 'indent', 'undo', 'redo'
             ],
             height: '500px',
+            plugins: [InsertLinkPlugin],
         });
     </script>
 </body>
