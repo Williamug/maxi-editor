@@ -4,6 +4,7 @@
 [![JSDelivr CDN](https://data.jsdelivr.com/v1/package/gh/<USERNAME>/<REPOSITORY>/badge?style=rounded)](https://www.jsdelivr.com/package/gh/williamug/maxi-editor)
 [![Github all releases](https://img.shields.io/github/downloads/williamug/maxi-editor/total.svg)](https://GitHub.com/williamug/maxi-editor/releases/)
 ![GitHub License](https://img.shields.io/github/license/williamug/maxi-editor)
+
 # MaxiEditor Documentation
 
 <img title="MaxiEditor" alt="MaxiEditor" src="/images/maxieditor.png">
