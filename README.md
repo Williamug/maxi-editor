@@ -46,7 +46,7 @@ npm install maxi-editor
 ```
 
 #### Direct Download
-Download the latest version from the [releases page](https://github.com/your-repo/maxi-editor/releases) and include the files manually in your project.
+Download the latest version from the [releases page](https://github.com/Williamug/maxi-editor/releases) and include the files manually in your project.
 
 
 ### 2.2. Basic Usage
