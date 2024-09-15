@@ -152,6 +152,7 @@ class MaxiEditor {
          */
         this.config.toolbar.forEach(tool => {
             const button = document.createElement('button');
+            button.type = 'button';
             button.innerHTML = iconMap[tool];
             button.setAttribute('data-command', tool);
             button.setAttribute('title', tooltipsMap[tool] || tool);
