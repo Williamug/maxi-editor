@@ -1,8 +1,7 @@
 ![GitHub Tag](https://img.shields.io/github/v/tag/williamug/maxi-editor)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/williamug/maxi-editor)
-[![JSDelivr CDN](https://data.jsdelivr.com/v1/package/gh/<USERNAME>/<REPOSITORY>/badge?style=rounded)](https://www.jsdelivr.com/package/gh/williamug/maxi-editor)
-[![Github all releases](https://img.shields.io/github/downloads/williamug/maxi-editor/total.svg)](https://GitHub.com/williamug/maxi-editor/releases/)
+[![JSDelivr CDN](https://data.jsdelivr.com/v1/package/npm/maxi-editor/badge)](https://www.jsdelivr.com/package/npm/maxi-editor)
 ![GitHub License](https://img.shields.io/github/license/williamug/maxi-editor)
 
 # MaxiEditor Documentation
@@ -34,8 +33,8 @@ MaxiEditor is a free, open source, lightweight, customizable rich text editor de
 To use MaxiEditor via CDN, include the following in your HTML:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.0/dist/maxi-editor.css">
-<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.0/dist/maxi-editor.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0/dist/maxi-editor.min.css">
+<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0/dist/maxi-editor.min.js"></script>
 ```
 
 #### NPM
@@ -60,12 +59,13 @@ Initialize MaxiEditor in your JavaScript code:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaxiEditor Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.0/dist/maxi-editor.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0/dist/maxi-editor.min.css">
 </head>
 <body>
     <div id="editor" class="maxi-editor"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.0/dist/maxi-editor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0/dist/maxi-editor.min.js"></script>
+
     <script>
         const editor = MaxiEditor.set('#editor', {
             toolbar: [
