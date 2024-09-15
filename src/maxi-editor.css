@@ -2,6 +2,16 @@
  * MaxiEditor
 * Copyright © 2024 William Asaba
  */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.editor-container {
+    width: auto;
+    max-width: auto;
+    text-align: left;
+}
 
 .maxi-toolbar {
     display: flex;
@@ -55,8 +65,8 @@ select {
 
 .link-modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 25%;
+    left: 30%;
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
