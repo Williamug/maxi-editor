@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/Williamug/maxi-editor.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["WYSIWYG", "editor", "rich text", "customizable", "web application", "text formatting", "headings", "fonts", "plugins"],
+  "author": "William Asaba",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Williamug/maxi-editor/issues"
