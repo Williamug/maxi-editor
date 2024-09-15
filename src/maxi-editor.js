@@ -156,7 +156,10 @@ class MaxiEditor {
             button.innerHTML = iconMap[tool];
             button.setAttribute('data-command', tool);
             button.setAttribute('title', tooltipsMap[tool] || tool);
-            button.addEventListener('click', () => this.executeCommand(tool));
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.executeCommand(tool);
+            });
             toolPanel.appendChild(button);
         });
     }
