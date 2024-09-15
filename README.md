@@ -67,7 +67,7 @@ Initialize MaxiEditor in your JavaScript code:
 
     <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.0/dist/maxi-editor.js"></script>
     <script>
-        const editor = MaxiEditor.create('#editor', {
+        const editor = MaxiEditor.set('#editor', {
             toolbar: [
                 'bold', 'italic', 'underline', 'justifyLeft', 
                 'justifyCenter', 'justifyRight', 'insertUnorderedList', 
