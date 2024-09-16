@@ -120,7 +120,7 @@ You can customize the toolbar by passing an array of tool names to the toolbar c
 
 The code below demonstrates how to configure the toolbar:
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline'],
     height: '500px'
 });
@@ -144,7 +144,7 @@ editor.setWidth('800px');
 Include and configure plugins. After installing the plugin, you should include it in the toolbar array to enable it on the toolbar.
 
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline', 'highlight', 'strikethrough'],
     plugins: [HighlightPlugin, StrikeThroughPlugin]
 });
@@ -153,7 +153,7 @@ const editor = MaxiEditor.create('#editor', {
 ### 3.2. Example Configuration
 
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline', 'highlight', 'strikethrough'],
     height: '400px',
     width: '600px',
@@ -443,10 +443,11 @@ editor.element.addEventListener('contentChanged', () => {
 
 ### 7.1. Methods
 
-#### **1. `create`**
+#### **1. `set`**
 ```js
-MaxiEditor.create(element, config)
+MaxiEditor.set(element, config)
 ```
+- Initializes the editor and renders it.
 - **element**: The HTML element where the editor is initialized.
 - **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, and `plugins`.
 
