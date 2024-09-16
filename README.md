@@ -33,8 +33,8 @@ MaxiEditor is a free, open source, lightweight, customizable rich text editor de
 To use MaxiEditor via CDN, include the following in your HTML:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.9/dist/maxi-editor.min.css">
-<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.9/dist/maxi-editor.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.css">
+<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.js"></script>
 ```
 
 #### NPM
@@ -59,7 +59,7 @@ Initialize MaxiEditor in your JavaScript code:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaxiEditor Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.9/dist/maxi-editor.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.css">
 </head>
 <body>
     <!-- here is the form -->
@@ -71,7 +71,7 @@ Initialize MaxiEditor in your JavaScript code:
     </form>
     <!-- /.form -->
 
-    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.9/dist/maxi-editor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.js"></script>
     <script>
         const editor = MaxiEditor.set('#editor', {
             toolbar: [
@@ -120,7 +120,7 @@ You can customize the toolbar by passing an array of tool names to the toolbar c
 
 The code below demonstrates how to configure the toolbar:
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline'],
     height: '500px'
 });
@@ -144,7 +144,7 @@ editor.setWidth('800px');
 Include and configure plugins. After installing the plugin, you should include it in the toolbar array to enable it on the toolbar.
 
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline', 'highlight', 'strikethrough'],
     plugins: [HighlightPlugin, StrikeThroughPlugin]
 });
@@ -153,7 +153,7 @@ const editor = MaxiEditor.create('#editor', {
 ### 3.2. Example Configuration
 
 ```js
-const editor = MaxiEditor.create('#editor', {
+const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline', 'highlight', 'strikethrough'],
     height: '400px',
     width: '600px',
@@ -443,10 +443,11 @@ editor.element.addEventListener('contentChanged', () => {
 
 ### 7.1. Methods
 
-#### **1. `create`**
+#### **1. `set`**
 ```js
-MaxiEditor.create(element, config)
+MaxiEditor.set(element, config)
 ```
+- Initializes the editor and renders it.
 - **element**: The HTML element where the editor is initialized.
 - **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, and `plugins`.
 
