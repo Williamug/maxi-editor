@@ -12,6 +12,7 @@
   },
   "keywords": ["WYSIWYG", "editor", "rich text", "customizable", "web application", "text formatting", "headings", "fonts", "plugins"],
   "author": "William Asaba",
+  "contributors": ["Bwambale Godwin"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Williamug/maxi-editor/issues"
