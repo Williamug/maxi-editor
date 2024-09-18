@@ -6,7 +6,7 @@
 
 # MaxiEditor Documentation
 
-<img title="MaxiEditor" alt="MaxiEditor" src="/images/maxieditor.png">
+<img title="MaxiEditor" alt="MaxiEditor" src="/images/maxi-editor.jpeg">
 
 ## 1. Introduction
 ### 1.1. Overview
@@ -75,11 +75,13 @@ Initialize MaxiEditor in your JavaScript code:
     <script>
         const editor = MaxiEditor.set('#editor', {
             toolbar: [
-                'bold', 'italic', 'underline', 'justifyLeft', 
+                'headingSelector', 'fontSelector','bold', 
+                'italic', 'underline', 'justifyLeft', 
                 'justifyCenter', 'justifyRight', 'insertUnorderedList', 
                 'insertOrderedList', 'insertLink' 'indent', 'undo', 'redo'
             ],
             height: '500px',
+            placeholder: 'Enter your description here...',
             plugins: [InsertLinkPlugin],
         });
 
@@ -102,10 +104,10 @@ Initialize MaxiEditor in your JavaScript code:
 #### Toolbar Configuration
 You can customize the toolbar by passing an array of tool names to the toolbar configuration option. The available tools include:
 - ```bold```
+- ```headingSelector```
+- ```fontSelector```
 - ```italic```
 - ```underline```
-- ```strikethrough```(through the strikethrough plugin)
-- ```highlight``` (through the highlight plugin)
 - ```heading```
 - ```font```
 - ```justifyLeft```
@@ -114,8 +116,14 @@ You can customize the toolbar by passing an array of tool names to the toolbar c
 - ```insertUnorderedList```
 - ```insertOrderedList```
 - ```indent```
+- ```outdent```
 - ```undo```
 - ```redo```
+
+Toolbar options which work with in-build plugins
+- ```strikethrough```
+- ```highlight``` 
+- ```removeLink```
 
 
 The code below demonstrates how to configure the toolbar:
@@ -123,6 +131,7 @@ The code below demonstrates how to configure the toolbar:
 const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline'],
     height: '500px'
+    placeholder: 'Enter your description here...',
 });
 ```
 
@@ -157,6 +166,7 @@ const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline', 'highlight', 'strikethrough'],
     height: '400px',
     width: '600px',
+    placeholder: 'Enter your description here',
     plugins: [HighlightPlugin, StrikeThroughPlugin]
 });
 ```
@@ -177,6 +187,7 @@ const editor = MaxiEditor.set('#editor', {
 - **insertUnorderedList:** Insert an unordered list.
 - **insertOrderedList:** Insert an ordered list.
 - **indent:** Indent selected text.
+- **outdent** Outdent selected text.
 - **undo:** Undo the last action.
 - **redo:** Redo the last undone action.
 
@@ -201,42 +212,22 @@ editor.executeCommand('myCustomCommand');
 ## 5. Plugins
 
 ### 5.1. Built-in Plugins
-- `Highlight Plugin`
-- `StrikeThrough`
-- `TextColorPlugin`
-- `LinkPlugin`
+<!-- - `HighLightPlugin` -->
+- `StrikeThroughPlugin`
+- `InsertLinkPlugin`
+<!-- - `TextColorPlugin` -->
 - `RemoveLinkPlugin`
-- `BackgroundColorPlugin`
+<!-- - `BackgroundColorPlugin`
 - `SubscriptPlugin`
 - `SuperscriptPlugin`
-- `mageURLPlugin`
+- `ImageURLPlugin`
+- `ImageUploadPlugin`
 - `BlockquotePlugin`
 - `CodeBlockPlugin`
 - `ClearFormattingPlugin`
-- `TablePlugin`
-- `ImageUploadPlugin`
+- `TablePlugin` -->
 
 <!-- ```js
-class HighlightPlugin {
-    static init(editor) {
-        editor.registerCommand('highlight', () => {
-            const color = prompt("Enter highlight color (e.g., yellow)");
-            document.execCommand('hiliteColor', false, color);
-        });
-    }
-}
-```
-
-```js
-class StrikeThrough {
-    static init(editor) {
-        editor.registerCommand('strikethrough', () => {
-            document.execCommand('strikeThrough', false, null);
-        });
-    }
-}
-```
-
 ```js
 class TextColorPlugin {
     static init(editor) {
@@ -248,18 +239,6 @@ class TextColorPlugin {
 }
 ```
 
-```js
-class LinkPlugin {
-    static init(editor) {
-        editor.registerCommand('insert-link', () => {
-            const url = prompt("Enter URL");
-            if (url) {
-                document.execCommand('createLink', false, url);
-            }
-        });
-    }
-}
-```
 
 ```js
 class RemoveLinkPlugin {
@@ -447,9 +426,9 @@ editor.element.addEventListener('contentChanged', () => {
 ```js
 MaxiEditor.set(element, config)
 ```
-- Initializes the editor and renders it.
+- Initializes the editor for text input.
 - **element**: The HTML element where the editor is initialized.
-- **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, and `plugins`.
+- **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, `placeholder` and `plugins`.
 
 #### **2. `includeBootstrapIcons`**
 ```js
@@ -510,6 +489,12 @@ setHeight(height)
 setWidth(width)
 ```
 - Sets the width of the editor dynamically.
+
+#### **12. `checkContent`**
+```js
+checkContent()
+```
+- Checks if there is content in the editor already
 
 ### 7.2. Properties
 
