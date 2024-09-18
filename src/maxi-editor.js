@@ -24,6 +24,38 @@ class MaxiEditor {
     }
 
     /**
+     * Initializes the MaxiEditor instance.
+     * This method sets up the contenteditable element, creates the toolbar, registers core commands, 
+     * applies user plugins (if any), and tracks selection changes to update the toolbar state.
+     */
+    init() {
+        // Set up contenteditable element
+        this.element.contentEditable = true;
+        this.element.classList.add('maxi-editor');
+        this.element.setAttribute('data-placeholder', this.config.placeholder || 'Start typing something here...');
+
+        // Check if the editor is initially empty
+        this.checkContent();
+
+        // Listen for input events
+        this.element.addEventListener('input', () => this.checkContent());
+
+        // Create the toolbar
+        this.createToolPanel();
+
+        // Register core commands (bold, italic, underline, etc)
+        this.registerCoreCommands();
+
+        // Apply user plugins (if any)
+        if (this.config.plugins) {
+            this.applyPlugins(this.config.plugins);
+        }
+
+        // Track selection changes to update toolbar state (make the toolbar item active or inactive)
+        this.trackSelection();
+    }
+
+    /**
      * Injects the Bootstrap Icons CSS stylesheet into the document if it is not already included.
      * This method checks if the Bootstrap Icons CSS file is already loaded on the page, 
      * and if not, it creates a new `<link>` element and appends it to the 
@@ -44,30 +76,18 @@ class MaxiEditor {
         }
     }
 
+
     /**
-     * Initializes the MaxiEditor instance.
-     * This method sets up the contenteditable element, creates the toolbar, registers core commands, 
-     * applies user plugins (if any), and tracks selection changes to update the toolbar state.
+     * Checks the content of the editor element and adds or removes the 'empty' class based on whether the text is empty or not.
+     * This method is used to track the initial state of the editor and apply appropriate styling.
      */
-    init() {
-        // Set up contenteditable element
-        this.element.contentEditable = true;
-        this.element.classList.add('maxi-editor');
-
-        // Create the toolbar
-        this.createToolPanel();
-
-        // Register core commands (bold, italic, underline, etc)
-        this.registerCoreCommands();
-
-        // Apply user plugins (if any)
-        if (this.config.plugins) {
-            this.applyPlugins(this.config.plugins);
+    checkContent() {
+        const text = this.element.innerText.trim();
+        if (text === "") {
+            this.element.classList.add('empty');
+        } else {
+            this.element.classList.remove('empty');
         }
-
-
-        // Track selection changes to update toolbar state (make the toolbar item active or inactive)
-        this.trackSelection();
     }
 
     /**
@@ -99,6 +119,7 @@ class MaxiEditor {
             insertUnorderedList: '<i class="bi bi-list-task"></i>',
             insertOrderedList: '<i class="bi bi-list-ol"></i>',
             indent: '<i class="bi bi-text-indent-left"></i>',
+            outdent: '<i class="bi bi-text-indent-right"></i>',
         };
 
         // Tooltip mapping for tools
@@ -117,33 +138,9 @@ class MaxiEditor {
             insertUnorderedList: 'Unordered List',
             insertOrderedList: 'Ordered List',
             indent: 'Indent',
+            outdent: 'Outdent'
         };
 
-        // Add Heading Selector
-        const headingSelector = document.createElement('select');
-        headingSelector.innerHTML = `
-            <option value="p">Normal</option>
-            <option value="H1">Heading 1</option>
-            <option value="H2">Heading 2</option>
-            <option value="H3">Heading 3</option>
-            <option value="H4">Heading 4</option>
-            <option value="H5">Heading 5</option>
-            <option value="H6">Heading 6</option>
-        `;
-        headingSelector.addEventListener('change', (e) => this.executeCommand('formatBlock', e.target.value));
-        toolPanel.appendChild(headingSelector);
-
-        // Add Font Family Selector
-        const fontSelector = document.createElement('select');
-        fontSelector.innerHTML = `
-            <option value="Arial">Arial</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Courier New">Courier New</option>
-        `;
-        fontSelector.addEventListener('change', (e) => this.executeCommand('fontName', e.target.value));
-        toolPanel.appendChild(fontSelector);
-
-        // Dynamically create tools with icons based on config
         /**
          * Dynamically creates toolbar buttons for the MaxiEditor instance based on the configured tools.
          * Each button is created as a `<button>` element with the corresponding icon from the `iconMap` object and a tooltip based on the `tooltipsMap` object.
@@ -151,6 +148,37 @@ class MaxiEditor {
          * The created buttons are then appended to the `toolPanel` element, which represents the toolbar for the MaxiEditor.
          */
         this.config.toolbar.forEach(tool => {
+            // Check for heading selector
+            if (tool === 'headingSelector') {
+                const headingSelector = document.createElement('select');
+                headingSelector.innerHTML = `
+                <option value="p">Normal</option>
+                <option value="H1">Heading 1</option>
+                <option value="H2">Heading 2</option>
+                <option value="H3">Heading 3</option>
+                <option value="H4">Heading 4</option>
+                <option value="H5">Heading 5</option>
+                <option value="H6">Heading 6</option>
+            `;
+                headingSelector.addEventListener('change', (e) => this.executeCommand('formatBlock', e.target.value));
+                toolPanel.appendChild(headingSelector);
+                return;
+            }
+
+            // Check for font selector
+            if (tool === 'fontSelector') {
+                const fontSelector = document.createElement('select');
+                fontSelector.innerHTML = `
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+            `;
+                fontSelector.addEventListener('change', (e) => this.executeCommand('fontName', e.target.value));
+                toolPanel.appendChild(fontSelector);
+                return;
+            }
+
+            // Create buttons for other tools
             const button = document.createElement('button');
             button.type = 'button';
             button.innerHTML = iconMap[tool];
@@ -163,8 +191,6 @@ class MaxiEditor {
             toolPanel.appendChild(button);
         });
     }
-
-
 
     /**
      * Registers a set of core commands for the editor.
@@ -186,6 +212,7 @@ class MaxiEditor {
         this.registerCommand('insertUnorderedList', () => document.execCommand('insertUnorderedList', false, null));
         this.registerCommand('insertOrderedList', () => document.execCommand('insertOrderedList', false, null));
         this.registerCommand('indent', () => document.execCommand('indent', false, null));
+        this.registerCommand('outdent', () => document.execCommand('outdent', false, null));
         this.registerCommand('undo', () => document.execCommand('undo', false, null));
         this.registerCommand('redo', () => document.execCommand('redo', false, null));
     }
@@ -264,7 +291,6 @@ class MaxiEditor {
         });
     }
 
-    // Get the content of the editor
     /**
      * Gets the content of the editor.
      * @returns {string} The HTML content of the editor.
@@ -327,22 +353,16 @@ class MaxiEditor {
     }
 }
 
-
+/** --------------------------------------------------------------------
+** Plugins
+** ---------------------------------------------------------------------
+*/
 /**
- * The HighlightPlugin class provides a command to highlight the selected text in the editor with a specified color.
+ * The StrikeThroughPlugin class provides a command to apply strikethrough formatting to the selected text in the editor.
  *
- * @class HighlightPlugin
+ * @class StrikeThroughPlugin
  */
-class HighlightPlugin {
-    static init(editor) {
-        editor.registerCommand('highlight', () => {
-            const color = prompt("Enter highlight color (e.g., yellow)");
-            document.execCommand('hiliteColor', false, color);
-        });
-    }
-}
-
-class StrikeThrough {
+class StrikeThroughPlugin {
     static init(editor) {
         editor.registerCommand('strikethrough', () => {
             document.execCommand('strikeThrough', false, null);
@@ -412,6 +432,17 @@ class InsertLinkPlugin {
         // Handle cancel button click
         cancelButton.addEventListener('click', () => {
             modal.remove();
+        });
+    }
+}
+
+/**
+ * A plugin that provides a command to remove links from the editor.
+ */
+class RemoveLinkPlugin {
+    static init(editor) {
+        editor.registerCommand('removeLink', () => {
+            document.execCommand('unlink', false, null);
         });
     }
 }
