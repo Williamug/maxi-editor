@@ -175,7 +175,7 @@ class MaxiEditor {
             `;
                 fontSelector.addEventListener('change', (e) => this.executeCommand('fontName', e.target.value));
                 toolPanel.appendChild(fontSelector);
-                return; // Continue to next tool
+                return;
             }
 
             // Create buttons for other tools
@@ -291,7 +291,6 @@ class MaxiEditor {
         });
     }
 
-    // Get the content of the editor
     /**
      * Gets the content of the editor.
      * @returns {string} The HTML content of the editor.
@@ -358,6 +357,11 @@ class MaxiEditor {
 ** Plugins
 ** ---------------------------------------------------------------------
 */
+/**
+ * The StrikeThroughPlugin class provides a command to apply strikethrough formatting to the selected text in the editor.
+ *
+ * @class StrikeThroughPlugin
+ */
 class StrikeThroughPlugin {
     static init(editor) {
         editor.registerCommand('strikethrough', () => {
@@ -432,6 +436,9 @@ class InsertLinkPlugin {
     }
 }
 
+/**
+ * A plugin that provides a command to remove links from the editor.
+ */
 class RemoveLinkPlugin {
     static init(editor) {
         editor.registerCommand('removeLink', () => {
