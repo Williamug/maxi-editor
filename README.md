@@ -6,7 +6,7 @@
 
 # MaxiEditor Documentation
 
-<img title="MaxiEditor" alt="MaxiEditor" src="/images/maxieditor.png">
+<img title="MaxiEditor" alt="MaxiEditor" src="/images/maxi-editor.jpeg">
 
 ## 1. Introduction
 ### 1.1. Overview
@@ -81,6 +81,7 @@ Initialize MaxiEditor in your JavaScript code:
                 'insertOrderedList', 'insertLink' 'indent', 'undo', 'redo'
             ],
             height: '500px',
+            placeholder: 'Enter your description here...',
             plugins: [InsertLinkPlugin],
         });
 
@@ -115,12 +116,13 @@ You can customize the toolbar by passing an array of tool names to the toolbar c
 - ```insertUnorderedList```
 - ```insertOrderedList```
 - ```indent```
+- ```outdent```
 - ```undo```
 - ```redo```
 
 Toolbar options which work with in-build plugins
-- ```strikethrough```(through the strikethrough plugin)
-- ```highlight``` (through the highlight plugin)
+- ```strikethrough```
+- ```highlight``` 
 - ```removeLink```
 
 
@@ -185,6 +187,7 @@ const editor = MaxiEditor.set('#editor', {
 - **insertUnorderedList:** Insert an unordered list.
 - **insertOrderedList:** Insert an ordered list.
 - **indent:** Indent selected text.
+- **outdent** Outdent selected text.
 - **undo:** Undo the last action.
 - **redo:** Redo the last undone action.
 
@@ -209,14 +212,12 @@ editor.executeCommand('myCustomCommand');
 ## 5. Plugins
 
 ### 5.1. Built-in Plugins
-- `HeadingSelectorPlugin`
-- `FontSelectorPlugin`
-- `HighLightPlugin`
+<!-- - `HighLightPlugin` -->
 - `StrikeThroughPlugin`
 - `InsertLinkPlugin`
-- `TextColorPlugin`
+<!-- - `TextColorPlugin` -->
 - `RemoveLinkPlugin`
-- `BackgroundColorPlugin`
+<!-- - `BackgroundColorPlugin`
 - `SubscriptPlugin`
 - `SuperscriptPlugin`
 - `ImageURLPlugin`
@@ -224,7 +225,7 @@ editor.executeCommand('myCustomCommand');
 - `BlockquotePlugin`
 - `CodeBlockPlugin`
 - `ClearFormattingPlugin`
-- `TablePlugin`
+- `TablePlugin` -->
 
 <!-- ```js
 ```js
@@ -425,9 +426,9 @@ editor.element.addEventListener('contentChanged', () => {
 ```js
 MaxiEditor.set(element, config)
 ```
-- Initializes the editor and renders it.
+- Initializes the editor for text input.
 - **element**: The HTML element where the editor is initialized.
-- **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, and `plugins`.
+- **config**: The configuration object containing the editor options such as `toolbar`, `height`, `width`, `placeholder` and `plugins`.
 
 #### **2. `includeBootstrapIcons`**
 ```js
