@@ -34,8 +34,8 @@ MaxiEditor is a free, open source, lightweight, customizable rich text editor de
 To use MaxiEditor via CDN, include the following in your HTML:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.css">
-<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.css">
+<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.js"></script>
 ```
 
 #### NPM
@@ -60,7 +60,7 @@ Initialize MaxiEditor in your JavaScript code:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaxiEditor Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.css">
 </head>
 <body>
     <!-- here is the form -->
@@ -72,7 +72,7 @@ Initialize MaxiEditor in your JavaScript code:
     </form>
     <!-- /.form -->
 
-    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.0.10/dist/maxi-editor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.js"></script>
     <script>
         const editor = MaxiEditor.set('#editor', {
             toolbar: [
