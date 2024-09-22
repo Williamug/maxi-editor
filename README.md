@@ -131,7 +131,7 @@ The code below demonstrates how to configure the toolbar:
 ```js
 const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline'],
-    height: '500px'
+    height: '500px',
     placeholder: 'Enter your description here...',
 });
 ```
