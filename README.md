@@ -37,12 +37,12 @@ To use MaxiEditor via CDN, include the following in your HTML:
 <script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.js"></script>
 ```
 
-#### NPM
+<!-- #### NPM
 Install MaxiEditor using npm:
 
 ```bash
 npm install maxi-editor
-```
+``` -->
 
 #### Direct Download
 Download the latest version from the [releases page](https://github.com/Williamug/maxi-editor/releases) and include the files manually in your project.
