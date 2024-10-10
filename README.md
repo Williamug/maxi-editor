@@ -1,5 +1,4 @@
 ![NPM Version](https://img.shields.io/npm/v/maxi-editor)
-![NPM Downloads](https://img.shields.io/npm/dw/maxi-editor)
 [![JSDelivr CDN](https://data.jsdelivr.com/v1/package/npm/maxi-editor/badge)](https://www.jsdelivr.com/package/npm/maxi-editor)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/williamug/maxi-editor)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
@@ -79,7 +78,7 @@ Initialize MaxiEditor in your JavaScript code:
                 'headingSelector', 'fontSelector','bold', 
                 'italic', 'underline', 'justifyLeft', 
                 'justifyCenter', 'justifyRight', 'insertUnorderedList', 
-                'insertOrderedList', 'insertLink' 'indent', 'undo', 'redo'
+                'insertOrderedList', 'insertLink', 'indent', 'undo', 'redo'
             ],
             height: '500px',
             placeholder: 'Enter your description here...',
