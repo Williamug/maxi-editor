@@ -446,3 +446,23 @@ class RemoveLinkPlugin {
         });
     }
 }
+
+class TablePlugin {
+    static init(editor) {
+        editor.registerCommand('insertTable', () => {
+            const rows = prompt("Enter the number of rows");
+            const cols = prompt("Enter the number of columns");
+            let table = "<table border='1'>";
+
+            for (let i = 0; i < rows; i++) {
+                table += "<tr>";
+                for (let j = 0; j < cols; j++) {
+                    table += "<td>&nbsp;</td>";
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+            document.execCommand('insertHTML', false, table);
+        });
+    }
+}
