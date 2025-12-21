@@ -1,21 +1,44 @@
 {
   "name": "maxi-editor",
+  "type": "module",
   "version": "1.1.3",
   "description": "MaxiEditor is a free, open source, lightweight, customizable rich text editor designed for easy integration with web projects. It offers essential text editing features with a flexible toolbar, user-configurable size, and plugin architecture for extended functionality.",
   "main": "maxi-editor.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest --config=jest.config.cjs",
+    "test:watch": "jest --config=jest.config.cjs --watch",
+    "test:coverage": "jest --config=jest.config.cjs --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Williamug/maxi-editor.git"
   },
-  "keywords": ["WYSIWYG", "editor", "rich text", "customizable", "web application", "text formatting", "headings", "fonts", "plugins"],
+  "keywords": [
+    "WYSIWYG",
+    "editor",
+    "rich text",
+    "customizable",
+    "web application",
+    "text formatting",
+    "headings",
+    "fonts",
+    "plugins"
+  ],
   "author": "William Asaba",
-  "contributors": ["Bwambale Godwin"],
+  "contributors": [
+    "Bwambale Godwin"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Williamug/maxi-editor/issues"
   },
-  "homepage": "https://github.com/Williamug/maxi-editor#readme"
+  "homepage": "https://github.com/Williamug/maxi-editor#readme",
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "babel-jest": "^30.2.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0"
+  }
 }
