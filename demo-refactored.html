@@ -73,7 +73,7 @@
 
     <script type="module">
       import MaxiEditor from "./src/index.js";
-      import { HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin } from "./src/index.js";
+      import { HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin } from "./src/index.js";
 
       const editor = MaxiEditor.set("#editor", {
         toolbar: [
@@ -90,6 +90,7 @@
           "insertUnorderedList",
           "insertOrderedList",
           "insertLink",
+          "table",
           "indent",
           "outdent",
           "undo",
@@ -97,7 +98,7 @@
         ],
         height: "400px",
         placeholder: "Type here to test the refactored editor...",
-        plugins: [HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin],
+        plugins: [HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin],
       });
 
       document

@@ -1,12 +1,26 @@
 /**
  * HTML Sanitizer
- * Provides XSS protection for editor content
+ * Provides XSS protection for editor content using DOMPurify
  */
 
+// Try to import DOMPurify (works in both Node and browser)
+let DOMPurify;
+try {
+  // For bundled/Node environments
+  DOMPurify = require('dompurify');
+} catch (e) {
+  // For browser environments, DOMPurify should be loaded globally
+  if (typeof window !== 'undefined' && window.DOMPurify) {
+    DOMPurify = window.DOMPurify;
+  }
+}
+
 export class Sanitizer {
-  constructor() {
-    // Define allowed tags and attributes
-    this.allowedTags = [
+  constructor(options = {}) {
+    this.useDOMPurify = options.useDOMPurify !== false && !!DOMPurify;
+
+    // Define allowed tags and attributes (fallback for custom sanitizer)
+    this.allowedTags = options.allowedTags || [
       'p', 'div', 'span', 'br',
       'b', 'strong', 'i', 'em', 'u', 's', 'mark',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -16,8 +30,8 @@ export class Sanitizer {
       'blockquote', 'pre', 'code'
     ];
 
-    this.allowedAttributes = {
-      'a': ['href', 'title', 'target'],
+    this.allowedAttributes = options.allowedAttributes || {
+      'a': ['href', 'title', 'target', 'rel'],
       'img': ['src', 'alt', 'title', 'width', 'height'],
       'span': ['style'],
       'div': ['style'],
@@ -26,10 +40,38 @@ export class Sanitizer {
       'th': ['colspan', 'rowspan']
     };
 
-    this.allowedStyles = [
+    this.allowedStyles = options.allowedStyles || [
       'color', 'background-color', 'font-size', 'font-family',
       'text-align', 'margin-left', 'padding'
     ];
+
+    // Configure DOMPurify if available
+    if (this.useDOMPurify) {
+      this.domPurifyConfig = {
+        ALLOWED_TAGS: this.allowedTags,
+        ALLOWED_ATTR: this._getAllowedAttrs(),
+        ALLOW_DATA_ATTR: false,
+        KEEP_CONTENT: true,
+        RETURN_DOM: false,
+        RETURN_DOM_FRAGMENT: false,
+        RETURN_DOM_IMPORT: false,
+        FORCE_BODY: false,
+        SANITIZE_DOM: true,
+        ...options.domPurifyConfig
+      };
+    }
+  }
+
+  /**
+   * Gets all allowed attributes from the allowedAttributes map
+   * @private
+   */
+  _getAllowedAttrs() {
+    const attrs = new Set();
+    Object.values(this.allowedAttributes).forEach(attrList => {
+      attrList.forEach(attr => attrs.add(attr));
+    });
+    return Array.from(attrs);
   }
 
   /**
@@ -42,6 +84,27 @@ export class Sanitizer {
       return '';
     }
 
+    // Use DOMPurify if available
+    if (this.useDOMPurify && DOMPurify) {
+      try {
+        return DOMPurify.sanitize(html, this.domPurifyConfig);
+      } catch (error) {
+        console.warn('DOMPurify sanitization failed, falling back to custom sanitizer:', error);
+        return this._customSanitize(html);
+      }
+    }
+
+    // Fallback to custom sanitizer
+    return this._customSanitize(html);
+  }
+
+  /**
+   * Custom sanitization (fallback when DOMPurify is not available)
+   * @param {string} html - HTML to sanitize
+   * @returns {string} - Sanitized HTML
+   * @private
+   */
+  _customSanitize(html) {
     // Create a temporary container
     const temp = document.createElement('div');
     temp.innerHTML = html;
@@ -184,5 +247,13 @@ export class Sanitizer {
       };
       return entities[char] || char;
     });
+  }
+
+  /**
+   * Checks if DOMPurify is available
+   * @returns {boolean}
+   */
+  static isDOMPurifyAvailable() {
+    return !!DOMPurify;
   }
 }
