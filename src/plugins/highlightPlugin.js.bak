@@ -1,0 +1,29 @@
+/**
+ * The HighlightPlugin class provides a way to add a "highlight" command to a MaxiEditor instance.
+ *
+ * When the "highlight" command is executed, it prompts the user to enter a highlight color (e.g. "yellow"),
+ * and then applies that highlight color to the selected text in the editor using the `document.execCommand('hiliteColor', false, color)` method.
+ *
+ * To use the HighlightPlugin, you need to call the `init` method and pass in the MaxiEditor instance you want to add the "highlight" command to.
+ */
+export class HighlightPlugin {
+    static init(editor) {
+        editor.registerCommand('highlight', () => {
+            const color = prompt("Enter highlight color (e.g., yellow)");
+            if (!color) return;
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            if (range.collapsed) return;
+            const span = document.createElement('span');
+            span.style.backgroundColor = color;
+            span.appendChild(range.extractContents());
+            range.insertNode(span);
+            // Move selection to the new span
+            selection.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.selectNodeContents(span);
+            selection.addRange(newRange);
+        });
+    }
+}
