@@ -1,5 +1,5 @@
 /**
- * MaxiEditor - Refactored Version
+ * MaxiEditor
  * A lightweight, customizable rich text editor
  * Copyright © 2024 William Asaba
  */

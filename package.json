@@ -1,7 +1,7 @@
 {
   "name": "maxi-editor",
   "type": "module",
-  "version": "1.1.3",
+  "version": "2.0.0",
   "description": "MaxiEditor is a free, open source, lightweight, customizable rich text editor designed for easy integration with web projects. It offers essential text editing features with a flexible toolbar, user-configurable size, and plugin architecture for extended functionality.",
   "main": "maxi-editor.js",
   "scripts": {
