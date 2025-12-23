@@ -48,20 +48,20 @@
     </style>
   </head>
   <body>
-    <h1>MaxiEditor Demo - Refactored Version</h1>
+    <h1>MaxiEditor Demo - v2</h1>
 
     <div class="demo-info">
-      <h3>🎉 New Features in Refactored Version:</h3>
+      <h3>🎉 New Features in v2:</h3>
       <ul>
-        <li>✅ Modular architecture with better code organization</li>
-        <li>✅ Color picker UI (no more prompts!)</li>
-        <li>✅ Improved modal dialogs for links</li>
-        <li>✅ XSS protection with content sanitization</li>
-        <li>✅ Keyboard navigation in toolbar</li>
-        <li>✅ ARIA labels for accessibility</li>
-        <li>✅ Memory leak prevention with cleanup methods</li>
-        <li>✅ Debounced history saves</li>
-        <li>✅ Better error handling</li>
+        <li>Modular architecture with better code organization</li>
+        <li>Color picker UI (no more prompts!)</li>
+        <li>Improved modal dialogs for links</li>
+        <li>XSS protection with content sanitization</li>
+        <li>Keyboard navigation in toolbar</li>
+        <li>ARIA labels for accessibility</li>
+        <li>Memory leak prevention with cleanup methods</li>
+        <li>Debounced history saves</li>
+        <li>Better error handling</li>
       </ul>
     </div>
 
@@ -73,7 +73,7 @@
 
     <script type="module">
       import MaxiEditor from "./src/index.js";
-      import { HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin } from "./src/index.js";
+      import { HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin, TextColorPlugin, BackgroundColorPlugin, ImageUploadPlugin } from "./src/index.js";
 
       const editor = MaxiEditor.set("#editor", {
         toolbar: [
@@ -90,6 +90,7 @@
           "insertUnorderedList",
           "insertOrderedList",
           "insertLink",
+          "insertImage",
           "table",
           "indent",
           "outdent",
@@ -98,7 +99,7 @@
         ],
         height: "400px",
         placeholder: "Type here to test the refactored editor...",
-        plugins: [HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin],
+        plugins: [HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin, TextColorPlugin, BackgroundColorPlugin, ImageUploadPlugin],
       });
 
       document
