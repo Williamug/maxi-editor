@@ -1,9 +1,12 @@
 {
-  "name": "maxi-editor",
+  "name": "@williamug/maxi-editor",
   "type": "module",
   "version": "2.0.0",
   "description": "MaxiEditor is a free, open source, lightweight, customizable rich text editor designed for easy integration with web projects. It offers essential text editing features with a flexible toolbar, user-configurable size, and plugin architecture for extended functionality.",
   "main": "maxi-editor.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --config webpack.prod.cjs",
