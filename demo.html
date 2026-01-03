@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maxi Editor Demo</title>
+    <link rel="stylesheet" href="./src/maxi-editor.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+      }
+      #editor-container {
+        max-width: 700px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Maxi Editor Demo</h1>
+    <form>
+      <textarea id="comment" name="comment" style="display: none"></textarea>
+      <div id="editor"></div>
+      <button type="submit">Submit</button>
+    </form>
+    <script type="module">
+      import MaxiEditor from "./src/maxi-editor.js";
+      import { HighlightPlugin } from "./src/plugins/highlightPlugin.js";
+      import { InsertLinkPlugin } from "./src/maxi-editor.js";
+
+      const editor = MaxiEditor.set("#editor", {
+        toolbar: [
+          "headingSelector",
+          "fontSelector",
+          "bold",
+          "italic",
+          "underline",
+          "highlight",
+          "strikethrough",
+          "justifyLeft",
+          "justifyCenter",
+          "justifyRight",
+          "insertUnorderedList",
+          "insertOrderedList",
+          "insertLink",
+          "indent",
+          "outdent",
+          "undo",
+          "redo",
+        ],
+        height: "300px",
+        placeholder: "Type here...",
+        plugins: [HighlightPlugin, InsertLinkPlugin],
+      });
+
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          // get the content from the editor
+          const editorContent = editor.getContent();
+          // Set the value of the hidden textarea to the editor content
+          document.querySelector("#comment").value = editorContent;
+        });
+    </script>
+  </body>
+</html>

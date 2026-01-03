@@ -1,0 +1,2 @@
+!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.MaxiEditor=t():e.MaxiEditor=t()}(this,()=>(()=>{"use strict";var e={};return e=e.default})());
+//# sourceMappingURL=maxi-editor-styles.js.map

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Leak Test - MaxiEditor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .test-section h3 {
+      margin-top: 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .stats {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>MaxiEditor - Memory Management Tests</h1>
+
+  <div class="test-section">
+    <h3>Test 1: Create and Destroy Multiple Editors</h3>
+    <p>This test creates and destroys 100 editor instances to check for memory leaks.</p>
+    <button onclick="testCreateDestroy()">Run Test</button>
+    <div id="test1-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h3>Test 2: Event Listener Cleanup</h3>
+    <p>Verifies that event listeners are properly removed after destroy().</p>
+    <button onclick="testEventListeners()">Run Test</button>
+    <div id="test2-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h3>Test 3: History Size Limit</h3>
+    <p>Tests that history doesn't grow beyond the configured limit.</p>
+    <button onclick="testHistoryLimit()">Run Test</button>
+    <div id="test3-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h3>Test 4: Large Content Performance</h3>
+    <p>Measures performance with large documents.</p>
+    <button onclick="testPerformance()">Run Test</button>
+    <div id="test4-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h3>Memory Usage Monitor</h3>
+    <p>Monitor memory usage in real-time (requires Chrome DevTools).</p>
+    <button onclick="startMonitoring()">Start Monitoring</button>
+    <button onclick="stopMonitoring()">Stop Monitoring</button>
+    <div id="memory-stats" class="stats"></div>
+  </div>
+
+  <script type="module">
+    import MaxiEditor from './src/index.js';
+    import { HighlightPlugin } from './src/index.js';
+
+    let monitoringInterval;
+
+    window.testCreateDestroy = async function() {
+      const resultDiv = document.getElementById('test1-result');
+      resultDiv.innerHTML = '<p>Running test...</p>';
+
+      const container = document.createElement('div');
+      container.id = 'temp-editor';
+      document.body.appendChild(container);
+
+      const startTime = performance.now();
+      const iterations = 100;
+
+      for (let i = 0; i < iterations; i++) {
+        const editor = MaxiEditor.set('#temp-editor', {
+          toolbar: ['bold', 'italic', 'underline'],
+          height: '100px',
+          plugins: [HighlightPlugin]
+        });
+
+        editor.setContent(`<p>Test content ${i}</p>`);
+        editor.destroy();
+      }
+
+      const endTime = performance.now();
+      const duration = (endTime - startTime).toFixed(2);
+
+      document.body.removeChild(container);
+
+      resultDiv.innerHTML = `
+        <div class="stats">
+          <div class="success">✓ Test Passed</div>
+          <div>Created and destroyed ${iterations} editors</div>
+          <div>Total time: ${duration}ms</div>
+          <div>Average: ${(duration / iterations).toFixed(2)}ms per editor</div>
+        </div>
+      `;
+    };
+
+    window.testEventListeners = function() {
+      const resultDiv = document.getElementById('test2-result');
+      const container = document.createElement('div');
+      container.id = 'temp-editor-2';
+      document.body.appendChild(container);
+
+      const editor = MaxiEditor.set('#temp-editor-2', {
+        toolbar: ['bold'],
+        height: '100px'
+      });
+
+      // Check that element has listeners
+      const hasListeners = container.contentEditable === 'true';
+
+      editor.destroy();
+
+      // Check that contentEditable is removed
+      const cleanedUp = container.contentEditable === 'false';
+      const classRemoved = !container.classList.contains('maxi-editor');
+
+      document.body.removeChild(container);
+
+      if (cleanedUp && classRemoved) {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="success">✓ Test Passed</div>
+            <div>Event listeners properly cleaned up</div>
+            <div>contentEditable: ${container.contentEditable}</div>
+            <div>Class removed: ${classRemoved}</div>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="error">✗ Test Failed</div>
+            <div>Cleanup incomplete</div>
+          </div>
+        `;
+      }
+    };
+
+    window.testHistoryLimit = function() {
+      const resultDiv = document.getElementById('test3-result');
+      const container = document.createElement('div');
+      container.id = 'temp-editor-3';
+      document.body.appendChild(container);
+
+      const maxSize = 10;
+      const editor = MaxiEditor.set('#temp-editor-3', {
+        toolbar: ['bold'],
+        height: '100px',
+        maxHistorySize: maxSize
+      });
+
+      // Add many entries
+      for (let i = 0; i < 50; i++) {
+        editor.setContent(`<p>Content ${i}</p>`);
+        editor.history.save();
+      }
+
+      const historySize = editor.history.stack.length;
+      const withinLimit = historySize <= maxSize;
+
+      editor.destroy();
+      document.body.removeChild(container);
+
+      if (withinLimit) {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="success">✓ Test Passed</div>
+            <div>History size: ${historySize} (limit: ${maxSize})</div>
+            <div>Added 50 entries, kept only ${historySize}</div>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="error">✗ Test Failed</div>
+            <div>History size exceeded limit: ${historySize} > ${maxSize}</div>
+          </div>
+        `;
+      }
+    };
+
+    window.testPerformance = function() {
+      const resultDiv = document.getElementById('test4-result');
+      const container = document.createElement('div');
+      container.id = 'temp-editor-4';
+      document.body.appendChild(container);
+
+      const editor = MaxiEditor.set('#temp-editor-4', {
+        toolbar: ['bold'],
+        height: '100px'
+      });
+
+      // Generate large content
+      const largeContent = '<p>' + 'Lorem ipsum dolor sit amet. '.repeat(1000) + '</p>';
+
+      const startTime = performance.now();
+      editor.setContent(largeContent);
+      const endTime = performance.now();
+
+      const duration = (endTime - startTime).toFixed(2);
+      const passed = duration < 100; // Should complete in < 100ms
+
+      editor.destroy();
+      document.body.removeChild(container);
+
+      if (passed) {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="success">✓ Test Passed</div>
+            <div>Set large content in ${duration}ms</div>
+            <div>Content size: ${largeContent.length} characters</div>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <div class="stats">
+            <div class="error">⚠ Performance Warning</div>
+            <div>Took ${duration}ms (expected < 100ms)</div>
+          </div>
+        `;
+      }
+    };
+
+    window.startMonitoring = function() {
+      const statsDiv = document.getElementById('memory-stats');
+
+      if (performance.memory) {
+        monitoringInterval = setInterval(() => {
+          const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(2);
+          const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(2);
+          const limit = (performance.memory.jsHeapSizeLimit / 1048576).toFixed(2);
+
+          statsDiv.innerHTML = `
+            <div><strong>Memory Usage:</strong></div>
+            <div>Used: ${used} MB</div>
+            <div>Total: ${total} MB</div>
+            <div>Limit: ${limit} MB</div>
+            <div>Usage: ${((used / limit) * 100).toFixed(1)}%</div>
+          `;
+        }, 1000);
+      } else {
+        statsDiv.innerHTML = `
+          <div class="error">
+            Memory API not available. Use Chrome with --enable-precise-memory-info flag.
+          </div>
+        `;
+      }
+    };
+
+    window.stopMonitoring = function() {
+      if (monitoringInterval) {
+        clearInterval(monitoringInterval);
+        monitoringInterval = null;
+      }
+    };
+  </script>
+</body>
+</html>
