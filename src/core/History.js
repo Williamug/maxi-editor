@@ -114,7 +114,7 @@ export class History {
    * Cleanup - removes event listeners
    */
   destroy() {
-    if (this._boundSave) {
+    if (this.element && this._boundSave) {
       this.element.removeEventListener('input', this._boundSave);
     }
     this.stack = [];
