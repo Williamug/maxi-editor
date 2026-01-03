@@ -41,6 +41,12 @@ export class Toolbar {
       insertOrderedList: '<i class="bi bi-list-ol"></i>',
       indent: '<i class="bi bi-text-indent-left"></i>',
       outdent: '<i class="bi bi-text-indent-right"></i>',
+      table: '<i class="bi bi-table"></i>',
+      insertTable: '<i class="bi bi-table"></i>',
+      textColor: '<i class="bi bi-palette"></i>',
+      backgroundColor: '<i class="bi bi-paint-bucket"></i>',
+      image: '<i class="bi bi-image"></i>',
+      insertImage: '<i class="bi bi-image"></i>'
     };
 
     // Tooltip mapping for tools
@@ -60,7 +66,13 @@ export class Toolbar {
       insertUnorderedList: 'Bullet List',
       insertOrderedList: 'Numbered List',
       indent: 'Increase Indent',
-      outdent: 'Decrease Indent'
+      outdent: 'Decrease Indent',
+      table: 'Insert Table',
+      insertTable: 'Insert Table',
+      textColor: 'Text Color',
+      backgroundColor: 'Background Color',
+      image: 'Insert Image',
+      insertImage: 'Insert Image'
     };
 
     // Create toolbar items
