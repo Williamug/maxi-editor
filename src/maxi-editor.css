@@ -68,48 +68,6 @@ select {
     visibility: visible;
 }
 
-.link-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    z-index: 1000;
-    border-radius: 8px
-}
-
-.link-modal input {
-    width: 100%;
-    margin: 10px 0;
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px
-}
-
-.link-modal button {
-    padding: 4px 10px;
-    margin: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer
-}
-
-.link-modal button:hover {
-    background-color: #0056b3
-}
-
-.link-modal button#cancel-btn {
-    background-color: #dc3545
-}
-
-.link-modal button#cancel-btn:hover {
-    background-color: #c82333
-}
-
 .color-palette {
     display: flex;
     gap: 5px;
@@ -132,4 +90,365 @@ select {
 
 .color-option:hover {
     border: 2px solid #000;
+}
+
+/* Modal Styles */
+.maxi-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+.maxi-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.maxi-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 400px;
+    max-width: 90%;
+}
+
+.maxi-modal-title {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.maxi-modal-body {
+    margin-bottom: 20px;
+}
+
+.maxi-modal-body label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.maxi-modal-body input[type="text"],
+.maxi-modal-body input[type="url"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.maxi-modal-body input[type="text"]:focus,
+.maxi-modal-body input[type="url"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.maxi-modal-body input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.maxi-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.maxi-modal-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.maxi-modal-confirm {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.maxi-modal-confirm:hover {
+    background-color: #0056b3;
+}
+
+.maxi-modal-cancel {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.maxi-modal-cancel:hover {
+    background-color: #5a6268;
+}
+
+/* Color Picker Styles */
+.maxi-color-picker {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+}
+
+.maxi-color-palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.maxi-color-option {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.maxi-color-option:hover {
+    border-color: #333;
+    transform: scale(1.1);
+}
+
+.maxi-color-custom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+}
+
+.maxi-color-custom label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+}
+
+.maxi-color-custom input[type="color"] {
+    width: 40px;
+    height: 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.maxi-color-apply {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.maxi-color-apply:hover {
+    background-color: #0056b3;
+}
+
+.maxi-color-recent {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+}
+
+.maxi-color-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+/* Link Form Styles */
+.maxi-link-form label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    font-weight: 500;
+    color: #555;
+}
+
+.maxi-link-form label:first-child {
+    margin-top: 0;
+}
+
+/* Toolbar Button Focus Styles */
+.maxi-toolbar-btn:focus,
+.maxi-toolbar-select:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+.maxi-toolbar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Improved Button Hover States */
+.maxi-toolbar button:hover:not(:disabled) {
+    background-color: #d4d4d4;
+}
+
+.maxi-toolbar button:active:not(:disabled) {
+    background-color: #c0c0c0;
+}
+
+/* High Contrast Mode Support */
+.maxi-high-contrast .maxi-toolbar {
+  border: 2px solid #000;
+  background-color: #fff;
+}
+
+.maxi-high-contrast .maxi-toolbar button {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-toolbar button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.maxi-high-contrast .maxi-toolbar button.active {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  outline: 2px solid #000;
+}
+
+.maxi-high-contrast .maxi-editor {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-modal-content {
+  border: 3px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-modal-btn {
+  border: 2px solid #000;
+}
+
+/* Screen Reader Only */
+.maxi-sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Skip Link */
+.maxi-skip-link:focus {
+  position: fixed !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 10000 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 10px !important;
+  background: #000 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+}
+
+/* Focus Visible (for keyboard navigation) */
+.maxi-toolbar button:focus-visible,
+.maxi-toolbar select:focus-visible,
+.maxi-modal-btn:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.maxi-editor:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: -3px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Table Plugin Modal Styles */
+.maxi-table-form {
+  padding: 10px 0;
+}
+
+.maxi-form-group {
+  margin-bottom: 20px;
+}
+
+.maxi-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.maxi-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.maxi-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.maxi-input:hover {
+  border-color: #bbb;
+}
+
+/* Modal button styles */
+.maxi-modal-btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.maxi-modal-btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.maxi-modal-btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.maxi-modal-btn-secondary:hover {
+  background-color: #5a6268;
 }

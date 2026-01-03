@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maxi Editor Demo - Refactored</title>
+    <link rel="stylesheet" href="./src/maxi-editor.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    /> -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      h1 {
+        color: #333;
+      }
+      .demo-info {
+        background: #f0f8ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      .demo-info h3 {
+        margin-top: 0;
+      }
+      #editor-container {
+        margin: 20px 0;
+      }
+      button[type="submit"] {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MaxiEditor Demo - v2</h1>
+
+    <div class="demo-info">
+      <h3>🎉 New Features in v2:</h3>
+      <ul>
+        <li>Modular architecture with better code organization</li>
+        <li>Color picker UI (no more prompts!)</li>
+        <li>Improved modal dialogs for links</li>
+        <li>XSS protection with content sanitization</li>
+        <li>Keyboard navigation in toolbar</li>
+        <li>ARIA labels for accessibility</li>
+        <li>Memory leak prevention with cleanup methods</li>
+        <li>Debounced history saves</li>
+        <li>Better error handling</li>
+      </ul>
+    </div>
+
+    <form>
+      <textarea id="comment" name="comment" style="display: none"></textarea>
+      <div id="editor"></div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script type="module">
+      import MaxiEditor from "./src/index.js";
+      import { HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin, TextColorPlugin, BackgroundColorPlugin, ImageUploadPlugin } from "./src/index.js";
+
+      const editor = MaxiEditor.set("#editor", {
+        toolbar: [
+          "headingSelector",
+          "fontSelector",
+          "bold",
+          "italic",
+          "underline",
+          "highlight",
+          "strikethrough",
+          "justifyLeft",
+          "justifyCenter",
+          "justifyRight",
+          "insertUnorderedList",
+          "insertOrderedList",
+          "insertLink",
+          "insertImage",
+          "table",
+          "indent",
+          "outdent",
+          "undo",
+          "redo",
+        ],
+        height: "400px",
+        placeholder: "Type here to test the refactored editor...",
+        plugins: [HighlightPlugin, InsertLinkPlugin, StrikeThroughPlugin, TablePlugin, TextColorPlugin, BackgroundColorPlugin, ImageUploadPlugin],
+      });
+
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Get the content from the editor
+          const editorContent = editor.getContent();
+
+          // Set the value of the hidden textarea
+          document.querySelector("#comment").value = editorContent;
+
+          // Get stats
+          const stats = editor.getStats();
+
+          // Show results
+          alert(`Content submitted!\n\nStats:\n- Characters: ${stats.characters}\n- Words: ${stats.words}\n- Paragraphs: ${stats.paragraphs}`);
+
+          console.log("Editor content:", editorContent);
+          console.log("Stats:", stats);
+        });
+    </script>
+  </body>
+</html>

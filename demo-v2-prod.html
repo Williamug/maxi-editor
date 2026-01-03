@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaxiEditor v2 - Production Demo</title>
+    <!-- Use the production minified CSS -->
+    <link rel="stylesheet" href="./dist/maxi-editor.min.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      h1 {
+        color: #333;
+      }
+      .demo-info {
+        background: #e9ecef;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      #editor-container {
+        margin: 20px 0;
+      }
+      .controls {
+        margin-top: 15px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      pre {
+        background: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MaxiEditor v2 - Production Demo</h1>
+
+    <div class="demo-info">
+      <p>This demo uses the <strong>minified production build</strong> from the <code>dist</code> folder.</p>
+    </div>
+
+    <div id="editor"></div>
+
+    <div class="controls">
+      <button id="get-content">Get Content & Stats</button>
+    </div>
+
+    <div id="result" style="display: none; margin-top: 20px">
+      <h3>Output:</h3>
+      <pre id="output-html"></pre>
+      <h3>Stats:</h3>
+      <pre id="output-stats"></pre>
+    </div>
+
+    <!-- Use the production minified JS (UMD) -->
+    <script src="./dist/maxi-editor.min.js"></script>
+
+    <!-- We still need plugins if they aren't bundled in the core or if we want to use them from source/bundle -->
+    <!-- In this setup, MaxiEditor UMD includes some things, but let's see how it works -->
+
+    <script>
+      // The UMD bundle puts MaxiEditor in global scope if no module system is found
+      // Or we can use the default export
+
+      const config = {
+        toolbar: [
+          "bold", "italic", "underline", "highlight",
+          "justifyLeft", "justifyCenter", "justifyRight",
+          "insertUnorderedList", "insertOrderedList",
+          "insertLink", "undo", "redo"
+        ],
+        height: "300px",
+        placeholder: "Testing the production bundle...",
+        // Note: In the production UMD build, plugins might need to be accessed differently
+        // if they are bundled. For now, let's just use core features.
+      };
+
+      const editor = MaxiEditor.set("#editor", config);
+
+      document.getElementById("get-content").addEventListener("click", () => {
+        const content = editor.getContent();
+        const stats = editor.getStats();
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("output-html").textContent = content;
+        document.getElementById("output-stats").textContent = JSON.stringify(stats, null, 2);
+      });
+    </script>
+  </body>
+</html>

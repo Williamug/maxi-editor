@@ -1,53 +1,69 @@
+# MaxiEditor v2
+
 ![NPM Version](https://img.shields.io/npm/v/maxi-editor)
-![NPM Downloads](https://img.shields.io/npm/dw/maxi-editor)
 [![JSDelivr CDN](https://data.jsdelivr.com/v1/package/npm/maxi-editor/badge)](https://www.jsdelivr.com/package/npm/maxi-editor)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/williamug/maxi-editor)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 ![GitHub License](https://img.shields.io/github/license/williamug/maxi-editor)
 
-# MaxiEditor Documentation
+MaxiEditor is a lightweight, modular, and highly customizable rich text editor for the web. Version 2.0 introduces a powerful plugin architecture, built-in security features, and a modern modular codebase.
 
-<img title="MaxiEditor" alt="MaxiEditor" src="/images/maxi-editor.jpeg">
+## Key Features in v2.0
 
-## 1. Introduction
-### 1.1. Overview
-MaxiEditor is a free, open source, lightweight, customizable rich text editor designed for easy integration with web projects. It offers essential text editing features with a flexible toolbar, user-configurable size, and plugin architecture for extended functionality.
+- **Plugin Architecture:** Customize your editor by adding only the features you need.
+- **Security First:** Built-in XSS protection and content sanitization.
+- **Accessible:** WCAG compliant with full screen reader and keyboard support.
+- **Modern UI:** Built-in Color Picker and improved dialogs.
+- **Keyboard Shortcuts:** Extensive shortcut support for power users.
+- **Performance Optimized:** Debounced updates and optimized event handling.
+- **Developer Friendly:** Comprehensive API and easy-to-use plugin system.
 
-### 1.2. Features
-- **Rich Text Formatting:** Bold, italic, underline, strikethrough, and more.
-- **Text Alignment:** Left, center, right justification.
-- **List Management:** Unordered and ordered lists.
-- **Customizable Toolbar:** Add or remove tools as needed.
-- **Plugin Support:** Extend functionality with custom plugins.
-- **Dynamic Height and Width:** Configure editor dimensions programmatically.
+## Installation
 
-### 1.3. Use Cases
-- **Blog Platforms:** Use as a blog post editor with formatting options.
-- **Web Applications:** Include in applications requiring rich text input.
+### CDN
 
-
-## 2. Getting Started
-
-### 2.1. Installation
-
-#### CDN
-To use MaxiEditor via CDN, include the following in your HTML:
+Include the latest version of MaxiEditor in your HTML:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.css">
-<script src="https://cdn.jsdelivr.net/npm/maxi-editor@1.1.1/dist/maxi-editor.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maxi-editor@2.0.0/dist/maxi-editor.min.css">
+
+<!-- JS (UMD) -->
+<script src="https://cdn.jsdelivr.net/npm/maxi-editor@2.0.0/dist/maxi-editor.min.js"></script>
 ```
 
-#### NPM
-Install MaxiEditor using npm:
+### NPM
 
 ```bash
 npm install maxi-editor
 ```
 
-#### Direct Download
-Download the latest version from the [releases page](https://github.com/Williamug/maxi-editor/releases) and include the files manually in your project.
+## Usage
 
+### Quick Start
+
+```javascript
+import MaxiEditor from 'maxi-editor';
+import { HighlightPlugin, InsertLinkPlugin } from 'maxi-editor/plugins';
+
+const editor = MaxiEditor.set('#editor', {
+  toolbar: ['bold', 'italic', 'underline', 'highlight', 'insertLink'],
+  plugins: [HighlightPlugin, InsertLinkPlugin],
+  height: '400px',
+  placeholder: 'Enter your description here...',
+});
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `toolbar` | `Array` | `[...]` | List of toolbar buttons. |
+| `plugins` | `Array` | `[]` | List of plugins to initialize. |
+| `height` | `String` | `'200px'` | Height of the editor. |
+| `placeholder` | `String` | `''` | Placeholder text when empty. |
+| `sanitize` | `Boolean` | `true` | Enable/disable XSS sanitization. |
+| `maxHistorySize`| `Number` | `100` | Undo/redo stack limit. |
 
 ### 2.2. Basic Usage
 
@@ -76,10 +92,10 @@ Initialize MaxiEditor in your JavaScript code:
     <script>
         const editor = MaxiEditor.set('#editor', {
             toolbar: [
-                'headingSelector', 'fontSelector','bold', 
-                'italic', 'underline', 'justifyLeft', 
-                'justifyCenter', 'justifyRight', 'insertUnorderedList', 
-                'insertOrderedList', 'insertLink' 'indent', 'undo', 'redo'
+                'headingSelector', 'fontSelector','bold',
+                'italic', 'underline', 'justifyLeft',
+                'justifyCenter', 'justifyRight', 'insertUnorderedList',
+                'insertOrderedList', 'insertLink', 'indent', 'undo', 'redo'
             ],
             height: '500px',
             placeholder: 'Enter your description here...',
@@ -123,7 +139,7 @@ You can customize the toolbar by passing an array of tool names to the toolbar c
 
 Toolbar options which work with in-build plugins
 - ```strikethrough```
-- ```highlight``` 
+- ```highlight```
 - ```removeLink```
 
 
@@ -131,7 +147,7 @@ The code below demonstrates how to configure the toolbar:
 ```js
 const editor = MaxiEditor.set('#editor', {
     toolbar: ['bold', 'italic', 'underline'],
-    height: '500px'
+    height: '500px',
     placeholder: 'Enter your description here...',
 });
 ```
@@ -547,8 +563,8 @@ If you'd like to contribute to MaxiEditor, you can:
 Submit issues on the [GitHub Issues page](https://github.com/your-repo/maxi-editor/issues).
 
 ## 11. Future Enhancements
-- Additional built-in commands 
-- More customizable toolbar 
+- Additional built-in commands
+- More customizable toolbar
 - Support for custom toolbar layouts
 - Plugin API improvements
 
