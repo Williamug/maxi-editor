@@ -312,3 +312,143 @@ select {
 .maxi-toolbar button:active:not(:disabled) {
     background-color: #c0c0c0;
 }
+
+/* High Contrast Mode Support */
+.maxi-high-contrast .maxi-toolbar {
+  border: 2px solid #000;
+  background-color: #fff;
+}
+
+.maxi-high-contrast .maxi-toolbar button {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-toolbar button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.maxi-high-contrast .maxi-toolbar button.active {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  outline: 2px solid #000;
+}
+
+.maxi-high-contrast .maxi-editor {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-modal-content {
+  border: 3px solid #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.maxi-high-contrast .maxi-modal-btn {
+  border: 2px solid #000;
+}
+
+/* Screen Reader Only */
+.maxi-sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Skip Link */
+.maxi-skip-link:focus {
+  position: fixed !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 10000 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 10px !important;
+  background: #000 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+}
+
+/* Focus Visible (for keyboard navigation) */
+.maxi-toolbar button:focus-visible,
+.maxi-toolbar select:focus-visible,
+.maxi-modal-btn:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.maxi-editor:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: -3px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Table Plugin Modal Styles */
+.maxi-table-form {
+  padding: 10px 0;
+}
+
+.maxi-form-group {
+  margin-bottom: 20px;
+}
+
+.maxi-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.maxi-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.maxi-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.maxi-input:hover {
+  border-color: #bbb;
+}
+
+/* Modal button styles */
+.maxi-modal-btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.maxi-modal-btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.maxi-modal-btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.maxi-modal-btn-secondary:hover {
+  background-color: #5a6268;
+}
