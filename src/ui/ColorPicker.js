@@ -4,23 +4,46 @@
  */
 
 export class ColorPicker {
-  constructor(options = {}) {
-    this.colors = options.colors || [
-      '#000000', '#ffffff', '#ff0000', '#00ff00', '#0000ff',
-      '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#800080',
-      '#ffc0cb', '#a52a2a', '#808080', '#00ff7f', '#4b0082'
-    ];
-    this.onSelect = options.onSelect || null;
+  constructor(onSelectCallback, colors = null) {
+    // Support both old and new constructor signatures
+    if (typeof onSelectCallback === 'function') {
+      this.onSelect = onSelectCallback;
+      this.colors = colors || this._getDefaultColors();
+    } else {
+      // Old signature: constructor(options)
+      const options = onSelectCallback || {};
+      this.colors = options.colors || this._getDefaultColors();
+      this.onSelect = options.onSelect || null;
+    }
+
     this.element = null;
     this.recentColors = [];
   }
 
   /**
-   * Shows the color picker at a specific position
-   * @param {number} x - X coordinate
-   * @param {number} y - Y coordinate
+   * Gets default color palette
+   * @private
    */
-  show(x, y) {
+  _getDefaultColors() {
+    return [
+      '#000000', '#ffffff', '#ff0000', '#00ff00', '#0000ff',
+      '#ffeb3b', '#ff9800', '#f44336', '#e91e63', '#9c27b0',
+      '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#009688',
+      '#4caf50', '#8bc34a', '#cddc39', '#ffc107', '#ff5722'
+    ];
+  }
+
+  /**
+   * Shows the color picker
+   * @param {HTMLElement|number} targetOrX - Button element or X coordinate
+   * @param {number} y - Y coordinate (if first param is number)
+   */
+  show(targetOrX, y) {
+    // Close any existing picker
+    if (this.element) {
+      this.close();
+    }
+
     this.element = document.createElement('div');
     this.element.classList.add('maxi-color-picker');
 
@@ -83,11 +106,49 @@ export class ColorPicker {
 
     // Position the picker
     this.element.style.position = 'absolute';
-    this.element.style.left = `${x}px`;
-    this.element.style.top = `${y}px`;
     this.element.style.zIndex = '1000';
 
+    // Determine position
+    let x, yPos;
+
+    if (typeof targetOrX === 'object' && targetOrX.getBoundingClientRect) {
+      // targetOrX is a button element
+      const rect = targetOrX.getBoundingClientRect();
+      x = rect.left + window.scrollX;
+      yPos = rect.bottom + window.scrollY + 5; // 5px below button
+    } else {
+      // targetOrX is x coordinate
+      x = targetOrX;
+      yPos = y;
+    }
+
+    this.element.style.left = `${x}px`;
+    this.element.style.top = `${yPos}px`;
+
     document.body.appendChild(this.element);
+
+    // Adjust position if picker goes off-screen
+    setTimeout(() => {
+      const pickerRect = this.element.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Adjust horizontal position if off-screen
+      if (pickerRect.right > viewportWidth) {
+        const newX = viewportWidth - pickerRect.width - 10;
+        this.element.style.left = `${newX}px`;
+      }
+
+      // Adjust vertical position if off-screen
+      if (pickerRect.bottom > viewportHeight) {
+        // Show above the button instead
+        if (typeof targetOrX === 'object' && targetOrX.getBoundingClientRect) {
+          const rect = targetOrX.getBoundingClientRect();
+          const newY = rect.top + window.scrollY - pickerRect.height - 5;
+          this.element.style.top = `${newY}px`;
+        }
+      }
+    }, 0);
 
     // Close on outside click
     setTimeout(() => {
@@ -104,7 +165,7 @@ export class ColorPicker {
     // Add to recent colors
     if (!this.recentColors.includes(color)) {
       this.recentColors.unshift(color);
-      if (this.recentColors.length > 5) {
+      if (this.recentColors.length > 8) {
         this.recentColors.pop();
       }
     }
@@ -137,5 +198,13 @@ export class ColorPicker {
     }
 
     this.element = null;
+  }
+
+  /**
+   * Destroys the color picker and cleans up
+   */
+  destroy() {
+    this.close();
+    this.recentColors = [];
   }
 }
