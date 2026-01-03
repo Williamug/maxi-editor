@@ -8,6 +8,7 @@ import { History } from './History.js';
 import { Sanitizer } from './Sanitizer.js';
 import { CommandRegistry } from './CommandRegistry.js';
 import { Toolbar } from '../ui/Toolbar.js';
+import { KeyboardHandler } from './KeyboardHandler.js';
 import { registerFormattingCommands, registerAlignmentCommands, registerListCommands } from '../commands/index.js';
 
 export class MaxiEditor {
@@ -26,6 +27,12 @@ export class MaxiEditor {
       plugins: config.plugins || [],
       maxHistorySize: config.maxHistorySize || 100,
       sanitize: config.sanitize !== false, // Default true
+      colorPalette: config.colorPalette || [
+        '#000000', '#ffffff', '#ff0000', '#00ff00', '#0000ff',
+        '#ffeb3b', '#ff9800', '#f44336', '#e91e63', '#9c27b0',
+        '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#009688',
+        '#4caf50', '#8bc34a', '#cddc39', '#ffc107', '#ff5722'
+      ],
       ...config
     };
 
@@ -34,6 +41,7 @@ export class MaxiEditor {
     this.sanitizer = new Sanitizer();
     this.history = null;
     this.toolbar = null;
+    this.keyboardHandler = null;
 
     // Event handlers (stored for cleanup)
     this._boundCheckContent = null;
@@ -90,6 +98,14 @@ export class MaxiEditor {
     // Add paste handler
     this._boundPasteHandler = (e) => this._handlePaste(e);
     this.element.addEventListener('paste', this._boundPasteHandler);
+
+    // Initialize keyboard shortcuts
+    if (this.config.keyboardShortcuts !== false) {
+      this.keyboardHandler = new KeyboardHandler(
+        this,
+        this.config.customShortcuts || {}
+      );
+    }
   }
 
   /**
@@ -166,23 +182,61 @@ export class MaxiEditor {
    * @private
    */
   _handlePaste(e) {
-    if (!this.config.sanitize) return;
+    // Check if paste handling is enabled
+    if (this.config.handlePaste === false) return;
 
     e.preventDefault();
 
     // Get pasted data
     const html = e.clipboardData.getData('text/html');
     const text = e.clipboardData.getData('text/plain');
+    const rtf = e.clipboardData.getData('text/rtf');
 
-    // Sanitize and insert
-    const content = html || text;
-    const sanitized = this.sanitizer.sanitize(content);
+    // Determine what to insert
+    let content;
 
+    if (this.config.pasteAsPlainText) {
+      // Plain text only
+      content = text;
+      try {
+        document.execCommand('insertText', false, content);
+      } catch (error) {
+        console.error('Failed to insert text:', error);
+      }
+      return;
+    }
+
+    // Handle different formats
+    if (html) {
+      // HTML content - sanitize if enabled
+      content = this.config.sanitize ? this.sanitizer.sanitize(html) : html;
+    } else if (text) {
+      // Plain text - convert newlines to <br> if preserveNewlines is true
+      if (this.config.preserveNewlines) {
+        content = text.replace(/\n/g, '<br>');
+      } else {
+        content = text;
+      }
+    } else {
+      // No content
+      return;
+    }
+
+    // Insert content
     try {
-      document.execCommand('insertHTML', false, sanitized);
+      if (this.config.pasteAsPlainText || !html) {
+        document.execCommand('insertText', false, text);
+      } else {
+        document.execCommand('insertHTML', false, content);
+      }
     } catch (error) {
       // Fallback to plain text
-      document.execCommand('insertText', false, text);
+      console.error('Failed to insert content:', error);
+      try {
+        document.execCommand('insertText', false, text);
+      } catch (fallbackError) {
+        console.error('Fallback insert also failed:', fallbackError);
+      }
     }
   }
 
@@ -273,14 +327,56 @@ export class MaxiEditor {
   }
 
   /**
+   * Gets content statistics
+   * @returns {Object} Statistics object with character, word, and paragraph counts
+   */
+  getStats() {
+    const content = this.element.textContent || '';
+    const html = this.element.innerHTML || '';
+
+    // Character count (excluding whitespace)
+    const characters = content.replace(/\s/g, '').length;
+
+    // Character count (including whitespace)
+    const charactersWithSpaces = content.length;
+
+    // Word count
+    const words = content.trim() === '' ? 0 : content.trim().split(/\s+/).length;
+
+    // Paragraph count (count <p>, <div>, <h1-h6> tags)
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const paragraphElements = tempDiv.querySelectorAll('p, div, h1, h2, h3, h4, h5, h6');
+    const paragraphs = paragraphElements.length || (content.trim() === '' ? 0 : 1);
+
+    // Sentence count (approximate - counts periods, exclamation marks, question marks)
+    const sentences = content.trim() === '' ? 0 :
+      (content.match(/[.!?]+/g) || []).length || (content.trim() ? 1 : 0);
+
+    // Line count
+    const lines = content.trim() === '' ? 0 : content.split('\n').length;
+
+    return {
+      characters,
+      charactersWithSpaces,
+      words,
+      paragraphs,
+      sentences,
+      lines,
+      // Reading time (assuming 200 words per minute)
+      readingTimeMinutes: Math.ceil(words / 200)
+    };
+  }
+
+  /**
    * Destroys the editor and cleans up resources
    */
   destroy() {
     // Remove event listeners
-    if (this._boundCheckContent) {
+    if (this.element && this._boundCheckContent) {
       this.element.removeEventListener('input', this._boundCheckContent);
     }
-    if (this._boundPasteHandler) {
+    if (this.element && this._boundPasteHandler) {
       this.element.removeEventListener('paste', this._boundPasteHandler);
     }
 
@@ -291,13 +387,18 @@ export class MaxiEditor {
     if (this.toolbar) {
       this.toolbar.destroy();
     }
+    if (this.keyboardHandler) {
+      this.keyboardHandler.destroy();
+    }
 
     // Clear command registry
     this.commandRegistry.clear();
 
     // Remove contenteditable
-    this.element.contentEditable = false;
-    this.element.classList.remove('maxi-editor');
+    if (this.element) {
+      this.element.contentEditable = false;
+      this.element.classList.remove('maxi-editor');
+    }
 
     // Clear references
     this.element = null;
