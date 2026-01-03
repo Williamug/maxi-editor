@@ -12,7 +12,10 @@ export {
   InsertLinkPlugin,
   StrikeThroughPlugin,
   RemoveLinkPlugin,
-  TablePlugin
+  TablePlugin,
+  TextColorPlugin,
+  BackgroundColorPlugin,
+  ImageUploadPlugin
 } from './plugins/index.js';
 
 // Export utilities (for advanced users)
