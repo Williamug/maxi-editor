@@ -7,7 +7,6 @@ import { MaxiEditor } from '../core/MaxiEditor.js';
 import { HighlightPlugin } from '../plugins/HighlightPlugin.js';
 import { InsertLinkPlugin } from '../plugins/InsertLinkPlugin.js';
 import { TablePlugin } from '../plugins/TablePlugin.js';
-import { ImageUploadPlugin } from '../plugins/ImageUploadPlugin.js';
 
 describe('Integration Tests', () => {
   let container;

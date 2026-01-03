@@ -312,19 +312,6 @@ export class MaxiEditor {
     this.element.style.width = width;
   }
 
-  /**
-   * Gets content statistics
-   * @returns {Object} - Statistics object
-   */
-  getStats() {
-    const text = this.element.textContent || '';
-    return {
-      characters: text.length,
-      charactersNoSpaces: text.replace(/\s/g, '').length,
-      words: text.trim().split(/\s+/).filter(w => w.length > 0).length,
-      paragraphs: this.element.querySelectorAll('p').length || 1
-    };
-  }
 
   /**
    * Gets content statistics
